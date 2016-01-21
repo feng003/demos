@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="prototype.js"></script>
+<script>
+    var date = new Date();
+    console.log($);
+    function checkName(name)
+    {
+        console.log(name);
+    }
+    function checkEmail(email)
+    {
+        console.log(email);
+    }
+    function checkPassword(pwd)
+    {
+        console.log(pwd);
+    }
+    checkName('username');
+    //函数也是变量
+    var checkName = function(name)
+    {
+        console.log(name+'variable');
+    }
+    checkName('variable');
+    //对象收编变量
+    var checkObj = {
+        checkName:function(name)
+        {
+            console.log(name+'object');
+        }
+    }
+    checkObj.checkName('object');
+    //类
+    var checkObject = function () {
+        this.checkName = function(lei)
+        {
+            console.log(lei+'class');
+        }
+    }
+    var a = new checkObject();
+    a.checkName('lei');
+    //原型
+    var checkObjectProto = function(){};
+    checkObjectProto.prototype.checkName = function(proto)
+    {
+        console.log(proto+'prototype');
+    }
+    var b = new checkObjectProto();
+    b.checkName('proto');
+
+</script>
+</body>
+</html>
