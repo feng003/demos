@@ -6,12 +6,70 @@
  *
  *--------------------------------------------------------------------------*/
 
+/**
+ * Prototype
+ *
+ *  The [[Prototype]] namespace provides fundamental information about the
+ *  Prototype library you're using, as well as a central repository(仓库) for default
+ *  iterators(迭代器) or functions.
+ *
+ *  We say "namespace," because the [[Prototype]] object is not intended for
+ *  instantiation(实例化), nor for mixing in other objects. It's really just... a
+ *  namespace.
+ *
+ *  ##### Your version of Prototype
+ *
+ *  Your scripts can check against a particular version of Prototype by
+ *  examining [[Prototype.Version]], which is a version [[String]] (e.g.
+ *  "<%= PROTOTYPE_VERSION %>"). The famous
+ *  [script.aculo.us](http://script.aculo.us) library does this at load time to
+ *  ensure it's being used with a reasonably recent version of Prototype, for
+ *  instance.
+ *
+ *  ##### Browser features
+ *
+ *  Prototype also provides a (nascent) repository of
+ *  [[Prototype.BrowserFeatures browser feature information]], which it then
+ *  uses here and there in its source code. The idea is, first, to make
+ *  Prototype's source code more readable; and second, to centralize whatever
+ *  scripting trickery might be necessary to detect the browser feature, in
+ *  order to ease maintenance.
+ *
+ *  ##### Default iterators and functions
+ *
+ *  Numerous methods in Prototype objects (most notably the [[Enumerable]]
+ *  module) let the user pass in a custom iterator, but make it optional by
+ *  defaulting to an "identity function" (an iterator that just returns its
+ *  argument, untouched). This is the [[Prototype.K]] function, which you'll
+ *  see referred to in many places.
+ *
+ *  Many methods also take it easy by protecting themselves against missing
+ *  methods here and there, reverting to empty functions when a supposedly
+ *  available method is missing. Such a function simply ignores its potential
+ *  arguments, and does nothing whatsoever (which is, oddly enough,
+ *  blazing fast). The quintessential empty function sits, unsurprisingly,
+ *  at [[Prototype.emptyFunction]] (note the lowercase first letter).
+ **/
 var Prototype = {
 
     Version: '1.7.2',
 
+
+    /**
+     *  Prototype.Browser
+     *
+     *  A collection of [[Boolean]] values indicating the browser which is
+     *  currently in use. Available properties are `IE`, `Opera`, `WebKit`,
+     *  `MobileSafari` and `Gecko`.
+     *
+     *  Example
+     *
+     *      Prototype.Browser.WebKit;
+     *      //-> true, when executed in any WebKit-based browser.
+     **/
     Browser: (function () {
         var ua = navigator.userAgent;
+        //This is a safer inference than plain boolean type conversion of `window.opera`
         var isOpera = Object.prototype.toString.call(window.opera) == '[object Opera]';
         return {
             IE: !!window.attachEvent && !isOpera,
@@ -22,11 +80,35 @@ var Prototype = {
         }
     })(),
 
+    /**
+     *  Prototype.BrowserFeatures
+     *
+     *  A collection of [[Boolean]] values indicating the presence of specific
+     *  browser features.
+     **/
     BrowserFeatures: {
+        /**
+         *  Prototype.BrowserFeatures.XPath -> Boolean
+         *
+         *  Used internally to detect if the browser supports
+         *  [DOM Level 3 XPath](http://www.w3.org/TR/DOM-Level-3-XPath/xpath.html).
+         **/
         XPath: !!document.evaluate,
 
+        /**
+         *  Prototype.BrowserFeatures.SelectorsAPI -> Boolean
+         *
+         *  Used internally to detect if the browser supports the
+         *  [NodeSelector API](http://www.w3.org/TR/selectors-api/#nodeselector).
+         **/
         SelectorsAPI: !!document.querySelector,
 
+        /**
+         *  Prototype.BrowserFeatures.ElementExtensions -> Boolean
+         *
+         *  Used internally to detect if the browser supports extending html element
+         *  prototypes.
+         **/
         ElementExtensions: (function () {
             var constructor = window.Element || window.HTMLElement;
             return !!(constructor && constructor.prototype);
@@ -52,9 +134,41 @@ var Prototype = {
     ScriptFragment: '<script[^>]*>([\\S\\s]*?)<\/script\\s*>',
     JSONFilter: /^\/\*-secure-([\s\S]*)\*\/\s*$/,
 
+    /**
+     *  Prototype.emptyFunction([argument...]) -> undefined
+     *  - argument (Object): Optional arguments
+     *
+     *  The [[Prototype.emptyFunction]] does nothing... and returns nothing!
+     *
+     *  It is used thoughout the framework to provide a fallback(回退) function(回调函数) in order
+     *  to cut down on conditionals. Typically you'll find it as a default value
+     *  for optional callback functions.
+     **/
     emptyFunction: function () {
     },
 
+    /**
+     *  Prototype.K(argument) -> argument
+     *  - argument (Object): Optional argument...
+     *
+     *  [[Prototype.K]] is Prototype's very own
+     *  [identity function](http://en.wikipedia.org/wiki/Identity_function), i.e.
+     *  it returns its `argument` untouched.
+     *
+     *  This is used throughout the framework, most notably in the [[Enumerable]]
+     *  module as a default value for iterators.
+     *
+     *  ##### Examples
+     *
+     *      Prototype.K('hello world!');
+     *      // -> 'hello world!'
+     *
+     *      Prototype.K(200);
+     *      // -> 200
+     *
+     *      Prototype.K(Prototype.K);
+     *      // -> Prototype.K
+     **/
     K: function (x) {
         return x
     }
@@ -64,15 +178,56 @@ if (Prototype.Browser.MobileSafari)
     Prototype.BrowserFeatures.SpecificElementExtensions = false;
 /* Based on Alex Arnell's inheritance implementation. */
 
+/** section: Language
+ * class Class
+ *
+ *  Manages Prototype's class-based OOP system.
+ *
+ *  Refer to Prototype's web site for a [tutorial on classes and
+ *  inheritance](http://prototypejs.org/learn/class-inheritance).
+ **/
 var Class = (function () {
 
+    // Some versions of JScript fail to enumerate over properties, names of which
+    // correspond to non-enumerable properties in the prototype chain
     var IS_DONTENUM_BUGGY = (function () {
         for (var p in {toString: 1}) {
+            // check actual property name, so that it works with augmented Object.prototype
             if (p === 'toString') return false;
         }
         return true;
     })();
 
+    /**
+     *  Class.create([superclass][, methods...]) -> Class
+     *    - superclass (Class): The optional superclass to inherit methods from.
+     *    - methods (Object): An object whose properties will be "mixed-in" to the
+     *        new class. Any number of mixins can be added; later mixins take
+     *        precedence.
+     *
+     *  [[Class.create]] creates a class and returns a constructor function for
+     *  instances of the class. Calling the constructor function (typically as
+     *  part of a `new` statement) will invoke the class's `initialize` method.
+     *
+     *  [[Class.create]] accepts two kinds of arguments. If the first argument is
+     *  a [[Class]], it's used as the new class's superclass, and all its methods
+     *  are inherited. Otherwise, any arguments passed are treated as objects,
+     *  and their methods are copied over ("mixed in") as instance methods of the
+     *  new class. In cases of method name overlap, later arguments take
+     *  precedence over earlier arguments.
+     *
+     *  If a subclass overrides an instance method declared in a superclass, the
+     *  subclass's method can still access the original method. To do so, declare
+     *  the subclass's method as normal, but insert `$super` as the first
+     *  argument. This makes `$super` available as a method for use within the
+     *  function.
+     *
+     *  To extend a class after it has been defined, use [[Class#addMethods]].
+     *
+     *  For details, see the
+     *  [inheritance tutorial](http://prototypejs.org/learn/class-inheritance)
+     *  on the Prototype website.
+     **/
     function subclass() {
     };
     function create() {
@@ -104,6 +259,71 @@ var Class = (function () {
         return klass;
     }
 
+    /**
+     *  Class#addMethods(methods) -> Class
+     *    - methods (Object): The methods to add to the class.
+     *
+     *  Adds methods to an existing class.
+     *
+     *  [[Class#addMethods]] is a method available on classes that have been
+     *  defined with [[Class.create]]. It can be used to add new instance methods
+     *  to that class, or overwrite existing methods, after the class has been
+     *  defined.
+     *
+     *  New methods propagate down the inheritance chain. If the class has
+     *  subclasses, those subclasses will receive the new methods &mdash; even in
+     *  the context of `$super` calls. The new methods also propagate to instances
+     *  of the class and of all its subclasses, even those that have already been
+     *  instantiated.
+     *
+     *  ##### Examples
+     *
+     *      var Animal = Class.create({
+   *        initialize: function(name, sound) {
+   *          this.name  = name;
+   *          this.sound = sound;
+   *        },
+   *
+   *        speak: function() {
+   *          alert(this.name + " says: " + this.sound + "!");
+   *        }
+   *      });
+     *
+     *      // subclassing Animal
+     *      var Snake = Class.create(Animal, {
+   *        initialize: function($super, name) {
+   *          $super(name, 'hissssssssss');
+   *        }
+   *      });
+     *
+     *      var ringneck = new Snake("Ringneck");
+     *      ringneck.speak();
+     *
+     *      //-> alerts "Ringneck says: hissssssss!"
+     *
+     *      // adding Snake#speak (with a supercall)
+     *      Snake.addMethods({
+   *        speak: function($super) {
+   *          $super();
+   *          alert("You should probably run. He looks really mad.");
+   *        }
+   *      });
+     *
+     *      ringneck.speak();
+     *      //-> alerts "Ringneck says: hissssssss!"
+     *      //-> alerts "You should probably run. He looks really mad."
+     *
+     *      // redefining Animal#speak
+     *      Animal.addMethods({
+   *        speak: function() {
+   *          alert(this.name + 'snarls: ' + this.sound + '!');
+   *        }
+   *      });
+     *
+     *      ringneck.speak();
+     *      //-> alerts "Ringneck snarls: hissssssss!"
+     *      //-> alerts "You should probably run. He looks really mad."
+     **/
     function addMethods(source) {
         var ancestor = this.superclass && this.superclass.prototype,
             properties = Object.keys(source);
@@ -151,6 +371,28 @@ var Class = (function () {
         }
     };
 })();
+
+/** section: Language
+ * class Object
+ *
+ *  Extensions to the built-in [[Object]] object.
+ *
+ *  Because it is dangerous and invasive to augment `Object.prototype` (i.e.,
+ *  add instance methods to objects), all these methods are static methods that
+ *  take an [[Object]] as their first parameter.
+ *
+ *  [[Object]] is used by Prototype as a namespace; that is, it just keeps a few
+ *  new methods together, which are intended for namespaced access (i.e. starting
+ *  with "`Object.`").
+ *
+ *  For the regular developer (who simply uses Prototype without tweaking(调整) it), the
+ *  most commonly used methods are probably [[Object.inspect]] and, to a lesser degree(程度),
+ *  [[Object.clone]].
+ *
+ *  Advanced users, who wish to create their own objects like Prototype does, or
+ *  explore(研究) objects as if they were hashes, will turn to [[Object.extend]],
+ *  [[Object.keys]], and [[Object.values]].
+ **/
 (function () {
 
     var _toString = Object.prototype.toString,
@@ -183,6 +425,12 @@ var Class = (function () {
         return true;
     })();
 
+    /**
+     * 对象类型 判断
+     * @param o
+     * @returns {*}
+     * @constructor
+     */
     function Type(o) {
         switch (o) {
             case null:
@@ -202,27 +450,106 @@ var Class = (function () {
         return OBJECT_TYPE;
     }
 
+    /**
+     *  Object.extend(destination, source) -> Object
+     *  - destination (Object): The object to receive the new properties.
+     *  - source (Object): The object whose properties will be duplicated.
+     *
+     *  Copies all properties from the source to the destination object. Used by Prototype
+     *  to simulate inheritance (rather statically) by copying to prototypes.
+     *
+     *  Documentation should soon become available that describes how Prototype implements
+     *  OOP, where you will find further details on how Prototype uses [[Object.extend]] and
+     *  [[Class.create]] (something that may well change in version 2.0). It will be linked
+     *  from here.
+     *
+     *  Do not mistake this method with its quasi-namesake(准同名) [[Element.extend]],
+     *  which implements Prototype's (much more complex) DOM extension mechanism(机制).
+     **/
     function extend(destination, source) {
         for (var property in source)
             destination[property] = source[property];
         return destination;
     }
 
+    /**
+     *  Object.inspect(obj) -> String
+     *  - object (Object): The item to be inspected.
+     *
+     *  Returns the debug-oriented string representation of the object.
+     *
+     *  * `undefined` and `null` are represented as such.
+     *  * Other types are looked up for a `inspect` method: if there is one, it is used, otherwise,
+     *  it reverts to the `toString` method.
+     *
+     *  Prototype provides `inspect` methods for many types, both built-in and library-defined,
+     *  such as in [[String#inspect]], [[Array#inspect]], [[Enumerable#inspect]] and [[Hash#inspect]],
+     *  which attempt to provide most-useful string representations (from a developer's standpoint)
+     *  for their respective types.
+     *
+     *  ##### Examples
+     *
+     *      Object.inspect();
+     *      // -> 'undefined'
+     *
+     *      Object.inspect(null);
+     *      // -> 'null'
+     *
+     *      Object.inspect(false);
+     *      // -> 'false'
+     *
+     *      Object.inspect([1, 2, 3]);
+     *      // -> '[1, 2, 3]'
+     *
+     *      Object.inspect('hello');
+     *      // -> "'hello'"
+     **/
     function inspect(object) {
         try {
             if (isUndefined(object)) return 'undefined';
             if (object === null) return 'null';
             return object.inspect ? object.inspect() : String(object);
         } catch (e) {
+            console.log(e);
             if (e instanceof RangeError) return '...';
             throw e;
         }
     }
 
+    /**
+     *  Object.toJSON(object) -> String
+     *  - object (Object): The object to be serialized.
+     *
+     *  Returns a JSON string.
+     *
+     *  `undefined` and `function` types have no JSON representation. `boolean`
+     *  and `null` are coerced to strings.
+     *
+     *  For other types, [[Object.toJSON]] looks for a `toJSON` method on `object`.
+     *  If there is one, it is used; otherwise the object is treated like a
+     *  generic [[Object]].
+     *
+     *  For more information on Prototype's JSON encoder, hop to our
+     *  [tutorial](http://prototypejs.org/learn/json).
+     *
+     *  ##### Example
+     *
+     *      var data = {name: 'Violet', occupation: 'character', age: 25, pets: ['frog', 'rabbit']};
+     *      Object.toJSON(data);
+     *      //-> '{"name": "Violet", "occupation": "character", "age": 25, "pets": ["frog","rabbit"]}'
+     **/
     function toJSON(value) {
         return Str('', {'': value}, []);
     }
 
+    /**
+     *
+     * @param key
+     * @param holder
+     * @param stack
+     * @returns {*}
+     * @constructor
+     */
     function Str(key, holder, stack) {
         var value = holder[key];
         if (Type(value) === OBJECT_TYPE && typeof value.toJSON === 'function') {
@@ -288,20 +615,118 @@ var Class = (function () {
         return JSON.stringify(object);
     }
 
+    /**
+     *  Object.toQueryString(object) -> String
+     *  - object (Object): The object whose property/value pairs will be converted.
+     *
+     *  Turns an object into its URL-encoded query string representation.
+     *
+     *  This is a form of serialization, and is mostly useful to provide complex
+     *  parameter sets for stuff such as objects in the [[Ajax]] namespace (e.g.
+     *  [[Ajax.Request]]).
+     *
+     *  Undefined-value pairs will be serialized as if empty-valued. Array-valued
+     *  pairs will get serialized with one name/value pair per array element. All
+     *  values get URI-encoded using JavaScript's native `encodeURIComponent`
+     *  function.
+     *
+     *  The order of pairs in the serialized form is not guaranteed (and mostly
+     *  irrelevant anyway) &mdash; except for array-based parts, which are serialized
+     *  in array order.
+     *
+     *  ##### Examples
+     *
+     *      Object.toQueryString({ action: 'ship', order_id: 123, fees: ['f1', 'f2'], 'label': 'a demo' })
+     *      // -> 'action=ship&order_id=123&fees=f1&fees=f2&label=a+demo'
+     **/
     function toQueryString(object) {
         return $H(object).toQueryString();
     }
 
+    /**
+     *  Object.toHTML(object) -> String
+     *  - object (Object): The object to convert to HTML.
+     *
+     *  Converts the object to its HTML representation.
+     *
+     *  Returns the return value of `object`'s `toHTML` method if it exists; else
+     *  runs `object` through [[String.interpret]].
+     *
+     *  ##### Examples
+     *
+     *      var Bookmark = Class.create({
+   *        initialize: function(name, url) {
+   *          this.name = name;
+   *          this.url = url;
+   *        },
+   *
+   *        toHTML: function() {
+   *          return '<a href="#{url}">#{name}</a>'.interpolate(this);
+   *        }
+   *      });
+     *
+     *      var api = new Bookmark('Prototype API', 'http://prototypejs.org/api');
+     *
+     *      Object.toHTML(api);
+     *      //-> '<a href="http://prototypejs.org/api">Prototype API</a>'
+     *
+     *      Object.toHTML("Hello world!");
+     *      //-> "Hello world!"
+     *
+     *      Object.toHTML();
+     *      //-> ""
+     *
+     *      Object.toHTML(null);
+     *      //-> ""
+     *
+     *      Object.toHTML(undefined);
+     *      //-> ""
+     *
+     *      Object.toHTML(true);
+     *      //-> "true"
+     *
+     *      Object.toHTML(false);
+     *      //-> "false"
+     *
+     *      Object.toHTML(123);
+     *      //-> "123"
+     **/
     function toHTML(object) {
         return object && object.toHTML ? object.toHTML() : String.interpret(object);
     }
 
+    /**
+     *  Object.keys(object) -> Array
+     *  - object (Object): The object to pull keys from.
+     *
+     *  Returns an array of the object's property names.
+     *
+     *  Note that the order of the resulting array is browser-dependent &mdash; it
+     *  relies on the `for...in` loop, for which the ECMAScript spec does not
+     *  prescribe an enumeration order. Sort the resulting array if you wish to
+     *  normalize the order of the object keys.
+     *
+     *  `Object.keys` acts as an ECMAScript 5 [polyfill](http://remysharp.com/2010/10/08/what-is-a-polyfill/).
+     *  It is only defined if not already present in the user's browser, and it
+     *  is meant to behave like the native version as much as possible. Consult
+     *  the [ES5 specification](http://es5.github.com/#x15.2.3.14) for more
+     *  information.
+     *
+     *  ##### Examples
+     *
+     *      Object.keys();
+     *      // -> []
+     *
+     *      Object.keys({ name: 'Prototype', version: '1.6.1' }).sort();
+     *      // -> ['name', 'version']
+     **/
     function keys(object) {
         if (Type(object) !== OBJECT_TYPE) {
             throw new TypeError();
         }
         var results = [];
         for (var property in object) {
+            //TODO
             if (_hasOwnProperty.call(object, property))
                 results.push(property);
         }
@@ -316,6 +741,27 @@ var Class = (function () {
         return results;
     }
 
+    /**
+     *  Object.values(object) -> Array
+     *  - object (Object): The object to pull values from.
+     *
+     *  Returns an array of the object's property values.
+     *
+     *  Note that the order of the resulting array is browser-dependent &mdash; it
+     *  relies on the `for...in` loop, for which the ECMAScript spec does not
+     *  prescribe an enumeration order.
+     *
+     *  Also, remember that while property _names_ are unique, property _values_
+     *  have no such constraint.
+     *
+     *  ##### Examples
+     *
+     *      Object.values();
+     *      // -> []
+     *
+     *      Object.values({ name: 'Prototype', version: '1.6.1' }).sort();
+     *      // -> ['1.6.1', 'Prototype']
+     **/
     function values(object) {
         var results = [];
         for (var property in object)
@@ -323,15 +769,87 @@ var Class = (function () {
         return results;
     }
 
+    /**
+     *  Object.clone(object) -> Object
+     *  - object (Object): The object to clone.
+     *
+     *  Creates and returns a shallow duplicate of the passed object by copying
+     *  all of the original's key/value pairs onto an empty object.
+     *
+     *  Do note that this is a _shallow_ copy, not a _deep_ copy. Nested objects
+     *  will retain their references.
+     *
+     *  ##### Examples
+     *
+     *      var original = {name: 'primaryColors', values: ['red', 'green', 'blue']};
+     *      var copy = Object.clone(original);
+     *
+     *      original.name;
+     *      // -> "primaryColors"
+     *      original.values[0];
+     *      // -> "red"
+     *      copy.name;
+     *      // -> "primaryColors"
+     *
+     *      copy.name = "secondaryColors";
+     *      original.name;
+     *      // -> "primaryColors"
+     *      copy.name;
+     *      // -> "secondaryColors"
+     *
+     *      copy.values[0] = 'magenta';
+     *      copy.values[1] = 'cyan';
+     *      copy.values[2] = 'yellow';
+     *      original.values[0];
+     *      // -> "magenta" (it's a shallow copy, so they share the array)
+     **/
     function clone(object) {
         return extend({}, object);
     }
 
+    /**
+     *  Object.isElement(object) -> Boolean
+     *  - object (Object): The object to test.
+     *
+     *  Returns `true` if `object` is a DOM node of type 1; `false` otherwise.
+     *
+     *  ##### Examples
+     *
+     *      Object.isElement(new Element('div'));
+     *      //-> true
+     *
+     *      Object.isElement(document.createElement('div'));
+     *      //-> true
+     *
+     *      Object.isElement($('id_of_an_exiting_element'));
+     *      //-> true
+     *
+     *      Object.isElement(document.createTextNode('foo'));
+     *      //-> false
+     **/
     function isElement(object) {
         return !!(object && object.nodeType == 1);
     }
 
+    /**
+     *  Object.isArray(object) -> Boolean
+     *  - object (Object): The object to test.
+     *
+     *  Returns `true` if `object` is an [[Array]]; `false` otherwise.
+     *
+     *  ##### Examples
+     *
+     *      Object.isArray([]);
+     *      //-> true
+     *
+     *      Object.isArray($w());
+     *      //-> true
+     *
+     *      Object.isArray({ });
+     *      //-> false
+     **/
     function isArray(object) {
+        //TODO call
         return _toString.call(object) === ARRAY_CLASS;
     }
 
@@ -342,26 +860,132 @@ var Class = (function () {
         isArray = Array.isArray;
     }
 
+    /**
+     *  Object.isHash(object) -> Boolean
+     *  - object (Object): The object to test.
+     *
+     *  Returns `true` if `object` is an instance of the [[Hash]] class; `false`
+     *  otherwise.
+     *
+     *  ##### Examples
+     *
+     *      Object.isHash(new Hash({ }));
+     *      //-> true
+     *
+     *      Object.isHash($H({ }));
+     *      //-> true
+     *
+     *      Object.isHash({ });
+     *      //-> false
+     **/
     function isHash(object) {
         return object instanceof Hash;
     }
 
+    /**
+     *  Object.isFunction(object) -> Boolean
+     *  - object (Object): The object to test.
+     *
+     *  Returns `true` if `object` is of type [[Function]]; `false` otherwise.
+     *
+     *  ##### Examples
+     *
+     *      Object.isFunction($);
+     *      //-> true
+     *
+     *      Object.isFunction(123);
+     *      //-> false
+     **/
     function isFunction(object) {
         return _toString.call(object) === FUNCTION_CLASS;
     }
 
+    /**
+     *  Object.isString(object) -> Boolean
+     *  - object (Object): The object to test.
+     *
+     *  Returns `true` if `object` is of type [[String]]; `false` otherwise.
+     *
+     *  ##### Examples
+     *
+     *      Object.isString("foo");
+     *      //-> true
+     *
+     *      Object.isString("");
+     *      //-> true
+     *
+     *      Object.isString(123);
+     *      //-> false
+     **/
     function isString(object) {
         return _toString.call(object) === STRING_CLASS;
     }
 
+    /**
+     *  Object.isNumber(object) -> Boolean
+     *  - object (Object): The object to test.
+     *
+     *  Returns `true` if `object` is of type [[Number]]; `false` otherwise.
+     *
+     *  ##### Examples
+     *
+     *      Object.isNumber(0);
+     *      //-> true
+     *
+     *      Object.isNumber(1.2);
+     *      //-> true
+     *
+     *      Object.isNumber("foo");
+     *      //-> false
+     **/
     function isNumber(object) {
         return _toString.call(object) === NUMBER_CLASS;
     }
 
+    /**
+     *  Object.isDate(object) -> Boolean
+     *  - object (Object): The object to test.
+     *
+     *  Returns `true` if `object` is of type [[Date]]; `false` otherwise.
+     *
+     *  ##### Examples
+     *
+     *      Object.isDate(new Date);
+     *      //-> true
+     *
+     *      Object.isDate("Dec 25, 1995");
+     *      //-> false
+     *
+     *      Object.isDate(new Date("Dec 25, 1995"));
+     *      //-> true
+     **/
     function isDate(object) {
         return _toString.call(object) === DATE_CLASS;
     }
 
+    /**
+     *  Object.isUndefined(object) -> Boolean
+     *  - object (Object): The object to test.
+     *
+     *  Returns `true` if `object` is of type `undefined`; `false` otherwise.
+     *
+     *  ##### Examples
+     *
+     *      Object.isUndefined();
+     *      //-> true
+     *
+     *      Object.isUndefined(undefined);
+     *      //-> true
+     *
+     *      Object.isUndefined(null);
+     *      //-> false
+     *
+     *      Object.isUndefined(0);
+     *      //-> false
+     *
+     *      Object.isUndefined("");
+     *      //-> false
+     **/
     function isUndefined(object) {
         return typeof object === "undefined";
     }
@@ -497,6 +1121,20 @@ Object.extend(Function.prototype, (function () {
 (function (proto) {
 
 
+    /**
+     *  Date#toISOString() -> String
+     *
+     *  Produces a string representation of the date in ISO 8601 format.
+     *  The time zone is always UTC, as denoted by the suffix "Z".
+     *
+     *  <h5>Example</h5>
+     *
+     *      var d = new Date(1969, 11, 31, 19);
+     *      d.getTimezoneOffset();
+     *      //-> -180 (time offest is given in minutes.)
+     *      d.toISOString();
+     *      //-> '1969-12-31T16:00:00Z'
+     **/
     function toISOString() {
         return this.getUTCFullYear() + '-' +
             (this.getUTCMonth() + 1).toPaddedString(2) + '-' +
@@ -507,6 +1145,19 @@ Object.extend(Function.prototype, (function () {
     }
 
 
+    /**
+     *  Date#toJSON() -> String
+     *
+     *  Internally calls [[Date#toISOString]].
+     *
+     *  <h5>Example</h5>
+     *
+     *      var d = new Date(1969, 11, 31, 19);
+     *      d.getTimezoneOffset();
+     *      //-> -180 (time offest is given in minutes.)
+     *      d.toJSON();
+     *      //-> '1969-12-31T16:00:00Z'
+     **/
     function toJSON() {
         return this.toISOString();
     }
@@ -558,7 +1209,25 @@ var PeriodicalExecuter = Class.create({
         }
     }
 });
+
+
+/** section: Language
+ * class String
+ *
+ *  Extensions to the built-in `String` class.
+ *
+ *  Prototype enhances the [[String]] object with a series of useful methods for
+ *  ranging from the trivial to the complex. Tired of stripping trailing
+ *  whitespace? Try [[String#strip]]. Want to replace `replace`? Have a look at
+ *  [[String#sub]] and [[String#gsub]]. Need to parse a query string? We have
+ *  [[String#toQueryParams what you need]].
+ **/
 Object.extend(String, {
+    /**
+     *  String.interpret(value) -> String
+     *
+     *  Coerces `value` into a string. Returns an empty string for `null`.
+     **/
     interpret: function (value) {
         return value == null ? '' : String(value);
     },
@@ -1113,6 +1782,64 @@ var Enumerable = (function () {
     };
 })();
 
+/** section: Language, related to: Array
+ *  $A(iterable) -> Array
+ *
+ *  Accepts an array-like collection (anything with numeric indices) and returns
+ *  its equivalent as an actual [[Array]] object. This method is a convenience
+ *  alias of [[Array.from]], but is the preferred way of casting to an [[Array]].
+ *
+ *  The primary use of [[$A]] is to obtain an actual [[Array]] object based on
+ *  anything that could pass as an array (e.g. the `NodeList` or
+ *  `HTMLCollection` objects returned by numerous DOM methods, or the predefined
+ *  `arguments` reference within your functions).
+ *
+ *  The reason you would want an actual [[Array]] is simple:
+ *  [[Array Prototype extends Array]] to equip it with numerous extra methods,
+ *  and also mixes in the [[Enumerable]] module, which brings in another
+ *  boatload of nifty methods. Therefore, in Prototype, actual [[Array]]s trump
+ *  any other collection type you might otherwise get.
+ *
+ *  The conversion performed is rather simple: `null`, `undefined` and `false` become
+ *  an empty array; any object featuring an explicit `toArray` method (as many Prototype
+ *  objects do) has it invoked; otherwise, we assume the argument "looks like an array"
+ *  (e.g. features a `length` property and the `[]` operator), and iterate over its components
+ *  in the usual way.
+ *
+ *  When passed an array, [[$A]] _makes a copy_ of that array and returns it.
+ *
+ *  ##### Examples
+ *
+ *  The well-known DOM method [`document.getElementsByTagName()`](http://www.w3.org/TR/DOM-Level-2-Core/core.html#ID-A6C9094)
+ *  doesn't return an [[Array]], but a `NodeList` object that implements the basic array
+ *  "interface." Internet Explorer does not allow us to extend `Enumerable` onto `NodeList.prototype`,
+ *  so instead we cast the returned `NodeList` to an [[Array]]:
+ *
+ *      var paras = $A(document.getElementsByTagName('p'));
+ *      paras.each(Element.hide);
+ *      $(paras.last()).show();
+ *
+ *  Notice we had to use [[Enumerable#each each]] and [[Element.hide]] because
+ *  [[$A]] doesn't perform DOM extensions, since the array could contain
+ *  anything (not just DOM elements). To use the [[Element#hide]] instance
+ *  method we first must make sure all the target elements are extended:
+ *
+ *      $A(document.getElementsByTagName('p')).map(Element.extend).invoke('hide');
+ *
+ *  Want to display your arguments easily? [[Array]] features a `join` method, but the `arguments`
+ *  value that exists in all functions *does not* inherit from [[Array]]. So, the tough
+ *  way, or the easy way?
+ *
+ *      // The hard way...
+ *      function showArgs() {
+ *        alert(Array.prototype.join.call(arguments, ', '));
+ *      }
+ *
+ *      // The easy way...
+ *      function showArgs() {
+ *        alert($A(arguments).join(', '));
+ *      }
+ **/
 function $A(iterable) {
     if (!iterable) return [];
     if ('toArray' in Object(iterable)) return iterable.toArray();
@@ -1121,7 +1848,30 @@ function $A(iterable) {
     return results;
 }
 
-
+/** section: Language, related to: Array
+ *  $w(String) -> Array
+ *
+ *  Splits a string into an [[Array]], treating all whitespace as delimiters. Equivalent
+ *  to Ruby's `%w{foo bar}` or Perl's `qw(foo bar)`.
+ *
+ *  This is one of those life-savers for people who just hate commas in literal arrays :-)
+ *
+ *  ### Examples
+ *
+ *      $w('apples bananas kiwis')
+ *      // -> ['apples', 'bananas', 'kiwis']
+ *
+ *  This can slightly shorten code when writing simple iterations:
+ *
+ *      $w('apples bananas kiwis').each(function(fruit){
+ *        var message = 'I like ' + fruit
+ *        // do something with the message
+ *      })
+ *
+ *  This also becomes sweet when combined with [[Element]] functions:
+ *
+ *      $w('ads navbar funkyLinks').each(Element.hide);
+ **/
 function $w(string) {
     if (!Object.isString(string)) return [];
     string = string.strip();
@@ -1428,6 +2178,28 @@ Array.from = $A;
     if (!arrayProto.indexOf) arrayProto.indexOf = indexOf;
     if (!arrayProto.lastIndexOf) arrayProto.lastIndexOf = lastIndexOf;
 })();
+
+
+/** section: Language, related to: Hash
+ *  $H([obj]) -> Hash
+ *
+ *  Creates a [[Hash]] (which is synonymous to "map" or "associative array"
+ *  for our purposes). A convenience wrapper around the [[Hash]] constructor, with a safeguard
+ *  that lets you pass an existing [[Hash]] object and get it back untouched (instead of
+ *  uselessly cloning it).
+ *
+ *  The [[$H]] function is the shorter way to obtain a hash (prior to 1.5 final, it was
+ *  the *only* proper way of getting one).
+ *
+ *  ##### Example
+ *
+ *      var h = $H({name: 'John', age: 26, country: 'Australia'});
+ *      // Equivalent to:
+ *      var h = new Hash({name: 'John', age: 26, country: 'Australia'});
+ *      // Can then be accessed the classic Hash way
+ *      h.get('country');
+ *      // -> 'Australia'
+ **/
 function $H(object) {
     return new Hash(object);
 };
@@ -2076,6 +2848,68 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     var DIV = document.createElement('div');
 
 
+    /** section: DOM
+     * class Element
+     **/
+
+    /** section: DOM, related to: Element
+     *  $(id) -> Element
+     *  $(id...) -> [Element...]
+     *    - id (String | Element): A DOM node or a string that references a node's
+     *      ID.
+     *
+     *  If provided with a string, returns the element in the document with
+     *  matching ID; otherwise returns the passed element.
+     *
+     *  Takes in an arbitrary number of arguments. Returns one [[Element]] if
+     *  given one argument; otherwise returns an [[Array]] of [[Element]]s.
+     *
+     *  All elements returned by the function are "extended" with [[Element]]
+     *  instance methods.
+     *
+     *  ##### More Information
+     *
+     *  The [[$]] function is the cornerstone of Prototype. Not only does it
+     *  provide a handy alias for `document.getElementById`, it also lets you pass
+     *  indifferently IDs (strings) or DOM node references to your functions:
+     *
+     *      function foo(element) {
+   *          element = $(element);
+   *          //  rest of the function...
+   *      }
+     *
+     *  Code written this way is flexible — you can pass it the ID of the element
+     *  or the element itself without any type sniffing.
+     *
+     *  Invoking it with only one argument returns the [[Element]], while invoking it
+     *  with multiple arguments returns an [[Array]] of [[Element]]s (and this
+     *  works recursively: if you're twisted, you could pass it an array
+     *  containing some arrays, and so forth). As this is dependent on
+     *  `getElementById`, [W3C specs](http://www.w3.org/TR/DOM-Level-2-Core/core.html#ID-getElBId)
+     *  apply: nonexistent IDs will yield `null` and IDs present multiple times in
+     *  the DOM will yield erratic results. *If you're assigning the same ID to
+     *  multiple elements, you're doing it wrong!*
+     *
+     *  The function also *extends every returned element* with [[Element.extend]]
+     *  so you can use Prototype's DOM extensions on it. In the following code,
+     *  the two lines are equivalent. However, the second one feels significantly
+     *  more object-oriented:
+     *
+     *      // Note quite OOP-like...
+     *      Element.hide('itemId');
+     *      // A cleaner feel, thanks to guaranted extension
+     *      $('itemId').hide();
+     *
+     *  However, when using iterators, leveraging the [[$]] function makes for
+     *  more elegant, more concise, and also more efficient code:
+     *
+     *      ['item1', 'item2', 'item3'].each(Element.hide);
+     *      // The better way:
+     *      $('item1', 'item2', 'item3').invoke('hide');
+     *
+     *  See [How Prototype extends the DOM](http://prototypejs.org/learn/extensions)
+     *  for more info.
+     **/
     function $(element) {
         if (arguments.length > 1) {
             for (var i = 0, elements = [], length = arguments.length; i < length; i++)
@@ -3458,6 +4292,130 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
         return proto;
     }
 
+    /**
+     *  Element.addMethods(methods) -> undefined
+     *  Element.addMethods(tagName, methods) -> undefined
+     *  - tagName (String): (Optional) The name of the HTML tag for which the
+     *    methods should be available; if not given, all HTML elements will have
+     *    the new methods.
+     *  - methods (Object): A hash of methods to add.
+     *
+     *  [[Element.addMethods]] makes it possible to mix your *own* methods into the
+     *  [[Element]] object and extended element instances (all of them, or only ones
+     *  with the given HTML tag if you specify `tagName`).
+     *
+     *  You define the methods in a hash that you provide to [[Element.addMethods]].
+     *  Here's an example adding two methods:
+     *
+     *      Element.addMethods({
+   *
+   *        // myOwnMethod: Do something cool with the element
+   *        myOwnMethod: function(element) {
+   *          if (!(element = $(element))) return;
+   *          // ...do smething with 'element'...
+   *          return element;
+   *        },
+   *
+   *        // wrap: Wrap the element in a new element using the given tag
+   *        wrap: function(element, tagName) {
+   *          var wrapper;
+   *          if (!(element = $(element))) return;
+   *          wrapper = new Element(tagName);
+   *          element.parentNode.replaceChild(wrapper, element);
+   *          wrapper.appendChild(element);
+   *          return wrapper;
+   *        }
+   *
+   *      });
+     *
+     *  Once added, those can be used either via [[Element]]:
+     *
+     *      // Wrap the element with the ID 'foo' in a div
+     *      Element.wrap('foo', 'div');
+     *
+     *  ...or as instance methods of extended elements:
+     *
+     *      // Wrap the element with the ID 'foo' in a div
+     *      $('foo').wrap('div');
+     *
+     *  Note the following requirements and conventions for methods added to
+     *  [[Element]]:
+     *
+     *  - The first argument is *always* an element or ID, by convention this
+     *    argument is called `element`.
+     *  - The method passes the `element` argument through [[$]] and typically
+     *    returns if the result is undefined.
+     *  - Barring a good reason to return something else, the method returns the
+     *    extended element to enable chaining.
+     *
+     *  Our `myOwnMethod` method above returns the element because it doesn't have
+     *  a good reason to return anything else. Our `wrap` method returns the
+     *  wrapper, because that makes more sense for that method.
+     *
+     *  ##### Extending only specific elements
+     *
+     *  If you call [[Element.addMethods]] with *two* arguments, it will apply the
+     *  methods only to elements with the given HTML tag:
+     *
+     *      Element.addMethods('DIV', my_div_methods);
+     *      // the given methods are now available on DIV elements, but not others
+     *
+     *  You can also pass an *[[Array]]* of tag names as the first argument:
+     *
+     *      Element.addMethods(['DIV', 'SPAN'], my_additional_methods);
+     *      // DIV and SPAN now both have the given methods
+     *
+     *  (Tag names in the first argument are not case sensitive.)
+     *
+     *  Note: [[Element.addMethods]] has built-in security which prevents you from
+     *  overriding native element methods or properties (like `getAttribute` or
+     *  `innerHTML`), but nothing prevents you from overriding one of Prototype's
+     *  methods. Prototype uses a lot of its methods internally; overriding its
+     *  methods is best avoided or at least done only with great care.
+     *
+     *  ##### Example 1
+     *
+     *  Our `wrap` method earlier was a complete example. For instance, given this
+     *  paragraph:
+     *
+     *      language: html
+     *      <p id="first">Some content...</p>
+     *
+     *  ...we might wrap it in a `div`:
+     *
+     *      $('first').wrap('div');
+     *
+     *  ...or perhaps wrap it and apply some style to the `div` as well:
+     *
+     *      $('first').wrap('div').setStyle({
+   *        backgroundImage: 'url(images/rounded-corner-top-left.png) top left'
+   *      });
+     *
+     *  ##### Example 2
+     *
+     *  We can add a method to elements that makes it a bit easier to update them
+     *  via [[Ajax.Updater]]:
+     *
+     *      Element.addMethods({
+   *        ajaxUpdate: function(element, url, options) {
+   *          if (!(element = $(element))) return;
+   *          element.update('<img src="/images/spinner.gif" alt="Loading...">');
+   *          options = options || {};
+   *          options.onFailure = options.onFailure || defaultFailureHandler.curry(element);
+   *          new Ajax.Updater(element, url, options);
+   *          return element;
+   *        }
+   *      });
+     *
+     *  Now we can update an element via an Ajax call much more concisely than
+     *  before:
+     *
+     *      $('foo').ajaxUpdate('/new/content');
+     *
+     *  That will use [[Ajax.Updater]] to load new content into the 'foo' element,
+     *  showing a spinner while the call is in progress. It even applies a default
+     *  failure handler (since we didn't supply one).
+     **/
     function addMethods(methods) {
         if (arguments.length === 0) addFormMethods();
 

@@ -6,13 +6,16 @@
 </head>
 <body>
 
+<div id="exam">
+    <p>123</p>
+</div>
 <script src="prototype.js"></script>
+<script src="exam.js"></script>
 <script>
-    var date = new Date();
-    console.log($);
-    function checkName(name)
+
+    function checkName(name,type)
     {
-        console.log(name);
+        console.log(arguments);
     }
     function checkEmail(email)
     {
@@ -22,7 +25,7 @@
     {
         console.log(pwd);
     }
-    checkName('username');
+    checkName('username','type');
     //函数也是变量
     var checkName = function(name)
     {
@@ -51,6 +54,7 @@
     checkObjectProto.prototype.checkName = function(proto)
     {
         console.log(proto+'prototype');
+        return this;
     }
     var b = new checkObjectProto();
     b.checkName('proto');
