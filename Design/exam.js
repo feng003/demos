@@ -25,8 +25,8 @@ function b()
 {
     console.log(a.call(this));
 }
-var c = new b();
-c.aa();
+//var c = new b();
+//c.aa();
 console.log(Object);
 console.log(Object.prototype.toString.call(null)); //[object Null]
 Object.prototype.toString.call(undefined);
