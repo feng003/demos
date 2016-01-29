@@ -10,6 +10,19 @@
 //    arr.push('push');
 //    console.log(arr);
 //    console.log(arr.pop());
+
+new Ajax.Request('index.php', {
+    method:'post',
+    data:{'username':"Anna"},
+    onSuccess: function(transport)
+    {
+        var response = transport.responseText || "no response text";
+        alert("Success! \n\n" + response);
+    },
+    onFailure: function() { alert('Something went wrong...'); }
+});
+
+
 var exam = document.getElementById('exam');
 $(exam).hide().toggle();
 console.log(exam);
