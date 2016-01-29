@@ -5,4 +5,8 @@
  * Date: 2016/1/29
  * Time: 9:35
  */
-echo false;
+
+var_dump($_REQUEST);
+$res = json_encode($_REQUEST);
+header('Content-type: application/json');
+print_r($res);
