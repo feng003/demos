@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flexbox</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <style>
+        .container {
+            display: flex;
+            color: #000;
+            /*background-color: blue;*/
+            /*text-decoration: underline;*/
+        }
+        nav {
+            background-color: transparent;
+        }
+        header {
+
+        }
+        div.main section:first-child {
+            color: aqua;
+        }
+
+        #content ul li { list-style: lower-roman;}
+    </style>
+</head>
+<body>
+<!-- Note that it is "h" + "1", not "h" + the letter "one" -->
+<div class="container">
+    <section>
+        <header>
+            <h2>GithubAccount</h2>
+        </header>
+    </section>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="">Ife</a></li>
+        </ul>
+    </nav>
+
+    <div class="main">
+        <section>
+            <h2>二级标题</h2>
+
+            <p>
+                浏览器先将标记语言和CSS转换成DOM (文档对象模型)结构。 这时DOM 就代表了电脑内存中的相应文档，因为它已经融合了文档内容和相应的样式表。
+                最后浏览器把 DOM的内容展示出来。
+            </p>
+        </section>
+        <section id="content">
+            <h2>
+                基于关系的选择器
+            </h2>
+            <ul>
+                <li>
+                    A E 任何是元素A的后代元素E (后代节点指A的子节点，子节点的子节点，以此类推)
+                </li>
+                <li>
+                    A > E 任何元素A的子元素
+                </li>
+                <li>
+                    E:first-child 任何元素的第一个子元素E
+                </li>
+                <li>
+                    B + E 任何元素B的下一个兄弟元素E
+                </li>
+                <li>
+                    B ~ E B元素后面的拥有共同父元素的兄弟元素E
+                </li>
+            </ul>
+        </section>
+    </div>
+    <aside>
+        <div>
+            <img src="./img/wx.png" alt="wx">
+        </div>
+    </aside>
+</div>
+</body>
+</html>
