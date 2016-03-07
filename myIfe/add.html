@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>add</title>
+</head>
+<body>
+<div>
+    <input type="text" id="num1">
+    <input type="text" id="num2">
+    <span id="result"></span>
+    <button id="btn">add</button>
+
+    <script src="./js/num.js"></script>
+    <script>
+        function $(id)
+        {
+            return document.getElementById(id);
+        }
+
+        function add(num1,num2)
+        {
+            console.log(num1,num2);
+            return Number(num1).add(Number(num2));
+        }
+
+        function renderResult(result)
+        {
+            $('result').innerHTML = result;
+        }
+
+        function addEventHandle()
+        {
+            let num1 = $('num1').value;
+            let num2 = $('num2').value;
+            let result = add(num1,num2);
+            renderResult(result);
+        }
+
+        function initEvent()
+        {
+            $('btn').addEventListener('click',addEventHandle,false);
+        }
+        initEvent()
+
+    </script>
+</div>
+</body>
+</html>
