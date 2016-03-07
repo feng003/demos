@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flexbox</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <style>
+        header{
+            text-align: center;
+        }
+        nav {
+            /*background-color: transparent;*/
+        }
+        nav ul li{
+            display: inline;
+        }
+        nav ul li a:hover {
+            color:red;
+        }
+
+        nav ul li a:after{content: "WX " url("./img/wx.png");}
+        header {
+
+        }
+        div.main section:first-child {
+            color: aqua;
+        }
+
+        div.main section{
+            border: solid red 2px;
+            margin: 5px;
+            padding: 5px;
+            width: 30%;
+            float: left;
+        }
+
+        div.main section p {
+            font-size:1.5em;
+            font-variant: all-petite-caps;
+            /*text-decoration: line-through;*/
+        }
+
+        div.main section p:before {
+            font-weight: bold;
+            color: navy;
+            content: "References: ";
+        }
+/* A+E A~E 相邻选择器  */
+        div.main section:first-child + section{
+            color:red;
+        }
+
+        #content ul li { list-style: lower-roman;}
+
+        aside{
+            padding:10px;
+            clear: left;
+        }
+        aside div{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!-- Note that it is "h" + "1", not "h" + the letter "one" -->
+<div class="container">
+    <section>
+        <header>
+            <h2>GithubAccount</h2>
+        </header>
+    </section>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="">Ife</a></li>
+        </ul>
+    </nav>
+
+    <div class="main">
+        <section>
+            <h2>1、二级标题</h2>
+            <p>
+                浏览器先将标记语言和CSS转换成DOM (文档对象模型)结构。 这时DOM 就代表了电脑内存中的相应文档，因为它已经融合了文档内容和相应的样式表。
+                最后浏览器把 DOM的内容展示出来。
+            </p>
+        </section>
+        <section id="content">
+            <h2>
+                2、基于关系的选择器
+            </h2>
+            <ul>
+                <li>
+                    A E 任何是元素A的后代元素E (子孙选择器 后代节点指A的子节点，子节点的子节点，以此类推)
+                </li>
+                <li>
+                    A > E 任何元素A的子元素 (子选择器)
+                </li>
+                <li>
+                    E:first-child 任何元素的第一个子元素E
+                </li>
+                <li>
+                    B + E 任何元素B的下一个兄弟元素E (相邻选择器 一个元素)
+                </li>
+                <li>
+                    B ~ E B元素后面的拥有共同父元素的兄弟元素E (相邻选择器 元素集合)
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3>
+                3、伪类选择器（Pseudo-classes selectors）
+            </h3>
+        </section>
+        <section>
+            <h3>
+                4、font
+            </h3>
+            <p>
+                font : 字体加粗，字体的风格;字体的大小;行高;字体。(1“em”等于1个字母“m”的宽度（相对于父元素字号大小）;因此1.5em就是1.5倍的父元素字号大小。)
+               line-height  控制行与行之间垂直距离
+            </p>
+        </section>
+        <section>
+            <h3>
+                5、内容(文本and图片)
+            </h3>
+            <span>
+                在选择器的后面加上:before 或者 :after 。在声明中，指定 content 属性，并设置文本内容。
+            </span>
+        </section>
+    </div>
+    <aside>
+        <div>
+            <img src="./img/wx.png" alt="wx">
+        </div>
+    </aside>
+</div>
+</body>
+</html>

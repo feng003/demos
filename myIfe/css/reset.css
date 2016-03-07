@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    width: 980px;
+    height: 100%;
+    font: 16px "Comic Sans MS", cursive;
+    line-height: 2;
+    background-color: #ddf;
+}
+.container {
+    /*display: flex;*/
+    color: #000;
+    /*background-color: blue;*/
+    /*text-decoration: underline;*/
+}
