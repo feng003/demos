@@ -33,19 +33,29 @@ var srcObj = {
 var abObj = srcObj;
 var tarObj = cloneObject(srcObj);
 
-srcObj.a = 2;
-srcObj.b.b1[0] = "Hello";
-
-console.log(abObj.a);
-console.log(abObj.b.b1[0]);
-
-console.log(tarObj.a);      // 1
-console.log(tarObj.b.b1[0]);    // "hello"
+//srcObj.a = 2;
+//srcObj.b.b1[0] = "Hello";
+//
+//console.log(abObj.a);
+//console.log(abObj.b.b1[0]);
+//
+//console.log(tarObj.a);      // 1
+//console.log(tarObj.b.b1[0]);    // "hello"
 
 // 对数组进行去重操作，只考虑数组中元素为数字或字符串，返回一个去重后的数组
+//用的是hash表,把已经出现过的通过下标的形式存入一个object内。下标的引用要比用indexOf搜索数组快的多。
 function uniqArray(arr)
 {
-    // your implement
+    var n={},r=[]; //n为hash r临时数组
+    for(var i=0;i<arr.length;i++)
+    {
+        if(!n[arr[i]])
+        {
+            n[arr[i]] = true;
+            r.push(arr[i]);
+        }
+    }
+    return r;
 }
 
 // 使用示例
@@ -57,14 +67,16 @@ console.log(b); // [1, 3, 5, 7]
 // 实现一个简单的trim函数，用于去除一个字符串，头部和尾部的空白字符
 // 假定空白字符只有半角空格、Tab
 // 练习通过循环，以及字符串的一些基本方法，分别扫描字符串str头部和尾部是否有连续的空白字符，并且删掉他们，最后返回一个完成去除的字符串
-function simpleTrim(str) {
+function simpleTrim(str)
+{
     // your implement
 }
 
 // 很多同学肯定对于上面的代码看不下去，接下来，我们真正实现一个trim
 // 对字符串头尾进行空格字符的去除、包括全角半角空格、Tab等，返回一个字符串
 // 尝试使用一行简洁的正则表达式完成该题目
-function trim(str) {
+function trim(str)
+{
     // your implement
 }
 
@@ -74,7 +86,8 @@ str = trim(str);
 console.log(str); // 'hi!'
 
 // 实现一个遍历数组的方法，针对数组中每一个元素执行fn函数，并将数组索引和元素作为参数传递
-function each(arr, fn) {
+function each(arr, fn)
+{
     // your implement
 }
 
@@ -82,14 +95,16 @@ function each(arr, fn) {
 
 // 使用示例
 var arr = ['java', 'c', 'php', 'html'];
-function output(item) {
+function output(item)
+{
     console.log(item)
 }
 each(arr, output);  // java, c, php, html
 
 // 使用示例
 var arr = ['java', 'c', 'php', 'html'];
-function output(item, index) {
+function output(item, index)
+{
     console.log(index + ': ' + item)
 }
 each(arr, output);  // 0:java, 1:c, 2:php, 3:html
@@ -110,11 +125,13 @@ var obj = {
 console.log(getObjectLength(obj)); // 3
 
 // 判断是否为邮箱地址
-function isEmail(emailStr) {
+function isEmail(emailStr)
+{
     // your implement
 }
 
 // 判断是否为手机号
-function isMobilePhone(phone) {
+function isMobilePhone(phone)
+{
     // your implement
 }
