@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>exam</title>
+</head>
+<body>
+<p>
+    1、最外层函数和在最外层函数外面定义的变量拥有全局作用域
+    2、所有末定义直接赋值的变量自动声明为拥有全局作用域
+    3、所有window对象的属性拥有全局作用域
+</p>
+
+<script>
+
+    (function(){
+
+        let arr = [];
+        let obj = {};
+        var name = 'name';
+        let name2 = 'name2';
+        name4 = 'name4';
+        function getName()
+        {
+            let name3 = 'name3';
+            var name1 = 'name1s';
+            function say()
+            {
+                alert(name1);
+            }
+            say();
+        }
+        console.log(name);
+//    console.log(name1);  //报错
+        getName();
+        console.log(name2);
+//    console.log(name3);  //报错
+        console.log(name4);
+
+//    say();  //报错
+
+    })()
+
+
+
+</script>
+</body>
+</html>
