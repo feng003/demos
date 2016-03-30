@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <title>
+            外观模式（封装成套餐）
+        </title>
+    </head>
+    <body>
+    <h2>
+        外观模式为一组复杂的子系统接口提供一个更高级的统一接口，通过这个接口使得对子系统接口的访问更容易。在javascript中有时也会用于对底层结构兼容性做统一封装来简化用户使用。
+    </h2>
+    <div>
+        <p>
+            EventTarget.addEventListener() (EventTarget.removeEventListener())方法将指定的事件监听器注册到 EventTarget 上，当该对象触发指定的事件时，指定的回调函数就会被执行。 事件目标可以是一个文档上的元素 Document 本身，Window 或者 XMLHttpRequest。
+        </p>
+        <p>
+            一个EventTarget是一个可以接受DOM事件且能绑定事件监听器的对象.最常见的EventTarget就是DOM元素对象,另外,还有一些不是DOM元素的对象也能成为EventTarget,比如document, window, XMLHttpRequest.
+        </p>
+    </div>
+    <input type="button" value="submit" id="myInput">
+        <script>
+            document.onclick = function(e)
+            {
+                e.preventDefault();
+                if(e.target !==document.getElementById('myInput'))
+                {
+                    hidePageAlert();
+                }
+            }
+            function hidePageAlert()
+            {
+                console.log('hidden page');
+            }
+            
+            document.onclick = function (e)
+            {
+                console.log('second bind event');
+            }
+
+            /**
+             * 外观模式实现
+             * @param dom
+             * @param type
+             * @param fn
+             */
+            function addEvent(dom,type,fn)
+            {
+                if(dom.addEventListener)
+                {
+                    dom.addEventListener(type,fn,false);
+                }else if(dom.attachEvent){
+                    dom.attachEvent('on'+type,fn);
+                }else{
+                    dom['on'+type] = fn;
+                }
+            }
+            var myInput = document.getElementById('myInput');
+            addEvent(myInput,'click',function(){
+                console.log('frist bind event');
+            })
+            addEvent(myInput,'click',function(){
+                console.log('third bind event');
+            })
+
+            //兼容性
+            //获取事件对象
+            var getEvent = function(event)
+            {
+                //标准浏览器返回event ie下 window.event
+                return event || window.event;
+            }
+            //获取元素
+            var getTarget = function(event)
+            {
+                var event = getEvent(event);
+                return event.target || event.srcElement;
+            }
+            //阻止默认行为
+            var preventDefault = function(event)
+            {
+                var event = getEvent(event);
+                if(event.preventDefault){
+                    event.preventDefault();
+                }else{
+                    event.returnValue = false;
+                }
+            }
+
+        </script>
+    </body>
+</html>
