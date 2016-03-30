@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>component</title>
+    <script src="./build/jquery.min.js"></script>
+    <script src="./build/react.js"></script>
+    <script src="./build/JSXTransformer.js"></script>
+</head>
+<body>
+<p>
+    父组件 与 子组件 是 通过 属性  委托 来实现交互 (bind)
+</p>
+<div id="exam"></div>
+<script type="text/jsx">
+    var GenderSelect = React.createClass({
+        render:function()
+        {
+            // 子组件 如果触发了事件，调用的就是父组件的 属性函数
+            return <select onChange={this.props.handleSelect}>
+            <option value="1">女</option> <option value="0">男</option>
+            </select>
+        }
+    });
+    var SignupForm = React.createClass({
+        getInitialState:function()
+        {
+            return { name:'',password:'',gender:'',}
+        },
+        handleChange:function(name,event)
+        {
+            var newState = {};
+            newState[name] = event.target.value;
+            this.setState(newState)
+        },
+        handleSelect:function(event)
+        {
+            this.setState({gender:event.target.value})
+        },
+        render:function()
+        {
+            //父组件如果触发了事件，通过 委托来调用 子组件
+            console.log(this.state);
+            return <form>
+                <input tyep="text" placeholder="请输入用户名" onChange={this.handleChange.bind(this,'name')} />
+                <input type="password" placeholder="请输入密码" onChange={this.handleChange.bind(this,'password')} />
+                <GenderSelect handleSelect={this.handleSelect}></GenderSelect>
+            </form>
+        }
+    })
+    React.render(<SignupForm></SignupForm>,document.body);
+</script>
+</body>
+</html>

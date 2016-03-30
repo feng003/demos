@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mixin</title>
+    <script src="./build/jquery.min.js"></script>
+    <script src="./build/react.js"></script>
+    <script src="./build/JSXTransformer.js"></script>
+</head>
+<body>
+<p>
+    Mixin  一组方法，使用Mixin的目地
+</p>
+<script type="text/jsx">
+    var BindingMixin = {
+        handleChange:function(key)
+        {
+            var that = this;
+            return function(event)
+            {
+                var newState  = {}
+                newState[key] = event.target.value
+                that.setState(newState)
+            }
+        }
+    };
+        var BindingExample = React.createClass({
+            mixins:[BindingMixin],
+            getInitialState:function()
+            {
+                return {text:"",comment:""}
+            },
+            render:function()
+            {
+                return (
+                        <div>
+                                <input type="text" placeholder="please enter sth"  onChange={this.handleChange('text')}/>
+                                <textarea onChange={this.handleChange('comment')}></textarea>
+                                <p>{this.state.text}</p>
+                                <p>{this.state.comment}</p>
+                        </div>
+                )
+            }
+        })
+
+//    var BindingExample = React.createClass({
+//        getInitialState:function()
+//        {
+//            return {text:""}
+//        },
+//        handleChange:function(e)
+//        {
+//            this.setState({text: e.target.value})
+//        },
+//        render:function()
+//        {
+//            return (
+//                    <div>
+//                            <input type="text" placeholder="please enter sth"  onChange={this.handleChange}/>
+//                            <p>{this.state.text}</p>
+//                    </div>
+//            )
+//        }
+//    })
+    React.render(<BindingExample></BindingExample>,document.body);
+</script>
+</body>
+</html>

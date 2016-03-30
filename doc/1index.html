@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件的生命周期（钩子函数）</title>
+    <script src="./build/jquery.min.js"></script>
+    <script src="./build/react.js"></script>
+    <script src="./build/JSXTransformer.js"></script>
+</head>
+<body>
+<div id="example">
+</div>
+<div id="running">
+
+</div>
+<ul>
+    <li>
+        初始化：getDefaultProps(只调用一次，实例之间共享引用)
+               getInitialState（初始化每个实例特有的状态）
+               componentWillMount（render之前最后一次修改状态的机会）
+               render（只能访问this.props this.state,只有一个顶层组件，不允许修改状态和DOM输出）
+               componentDidMount（成功render并渲染完成真实DOM之后触发，可以修改DOM）
+    </li>
+    <li>
+        运行中：componentWillReceiveProps(父组件修改属性触发，可以修改新属性、修改状态)
+               shouldComponentUpdate (返回false 会阻止render调用)
+               componentWillUpdate (不能修改属性和状态)
+               render ()
+               componentDidUpdate (可以修改DOM)
+    </li>
+    <li>
+        销毁：componentWillUnmount (删除组件之前进行清理操作，比如计时器和事件监听器)
+    </li>
+</ul>
+<!--<div id="example"></div>-->
+<script type="text/jsx" src="./1index.js"></script>
+<script type="text/jsx" src="./2index.js"></script>
+<script type="text/jsx">
+    var HelloWorld =React.createClass({
+        render: function() {
+            console.log("render 4");
+            return (
+                    <p> Hello {this.props.name?this.props.name:"world"}</p>
+            );
+        },
+        componentWillUpdate: function(nextProps, nextState) {
+          console.log('111111111111111122222');
+        }
+    });
+
+    var TestRun = React.createClass({
+        getInitialState: function() {
+            return {
+                name:""
+            };
+        },
+        handleChange:function(event){
+            this.setState({name:event.target.value});
+        },
+        render:function()
+        {
+            if(this.state.name=='123')
+            {
+                return <div>123</div>
+            }
+            return (<div>
+                    <HelloWorld name={this.state.name}></HelloWorld>
+        <input type="text" onChange={this.handleChange} />
+            <br />
+        </div>
+            )
+        }
+    });
+    React.render( <div> <TestRun></TestRun> </div> ,document.getElementById('running'));
+
+</script>
+</body>
+</html>

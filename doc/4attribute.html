@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>attribute and status </title>
+    <script src="./build/jquery.min.js"></script>
+    <script src="./build/react.js"></script>
+    <script src="./build/JSXTransformer.js"></script>
+</head>
+<body>
+    <div id="exam"></div>
+    <p>
+        props = properties (属性 不可以自己修改，是由父组件 传递过来的.组件内部不可以修改属性)
+        1、<HelloWorld name = ?('Time',{123},{'Tim'},{[1,2,3,4],{variable}})  />
+        2、 var props ={one:"123",two:12}
+        <HelloWorld{...props} />
+        3、setProps()
+
+        state
+        getInitialState 初始化每个实例特有的状态
+        setState 更新组件状态
+    </p>
+    <div id="example"></div>
+
+
+    <script type="text/jsx" src="4attribute.js"></script>
+    <script type="text/jsx">
+        var HelloWorld =React.createClass({
+
+            render: function() {
+                console.log("render 4");
+                return (
+                        <p> Hello {this.props.name?this.props.name:'React'} {this.props.name1 + '#' +this.props.name2}</p>
+                );
+            }
+        });
+
+        var HelloUniverse = React.createClass({
+            getInitialState: function() {
+                return {
+                    name:"",
+                    name1:"Tim",
+                    name2:"John"
+                };
+            },
+            handleChange:function(event){
+                this.setState({name:event.target.value});
+            },
+            render:function()
+            {
+                return (<div>
+                        <HelloWorld {...this.state}></HelloWorld>
+                            <input type="text" onChange={this.handleChange} />
+                                <br />
+                        </div>
+                )
+            }
+        });
+        React.render( <div> <HelloUniverse></HelloUniverse> </div> ,document.getElementById('example'));
+    </script>
+
+</body>
+</html>

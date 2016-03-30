@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSX</title>
+    <script src="./build/jquery.min.js"></script>
+    <script src="./build/react.js"></script>
+    <script src="./build/JSXTransformer.js"></script>
+</head>
+<body>
+<p>
+    jsx是基于ECMAScript的一种新特性
+    1、类XML语法 2、增强js语义 3、结构清晰 4、抽象程度高 5、代码模块化
+    htmlFor className
+</p>
+<p>
+    非DOM属性:dangerouslySetInnerHTML、ref、key
+    dangerouslySetInnerHTML 在jsx 中直接插入HTML代码
+    ref 父组件 引用 子组件
+    key
+</p>
+<div id="exam"></div>
+
+<div id="example"></div>
+<script type="text/jsx">
+    var style = {
+        color:"red",
+        border:"1px #000 solid",
+    }
+    var HelloWorld = React.createClass({
+        getName:function()
+        {
+            if(this.props.name)
+                return this.props.name
+            else
+                return "world"
+        },
+        render:function()
+        {
+            var name = this.getName();
+            return (<div className="test">Hello {
+                    name
+                /*
+                    注释
+                 */
+                //this.props.name?this.props.name:'React'
+                // 注释
+                }</div>);
+        }
+    });
+
+    var HelloWorld = React.createClass({
+        render:function()
+        {
+            return (<div className="test">Hello {
+            (function(obj){
+                if(obj.props.name)
+                    return obj.props.name
+                else
+                    return "World"
+            })(this)
+            /*
+             注释
+             */
+            //this.props.name?this.props.name:'React'
+            // 注释
+        }</div>);
+        }
+    });
+
+    React.render( <div style={style}> <HelloWorld name="mike"></HelloWorld> </div>,document.getElementById('exam'));
+</script>
+<script type="text/jsx" src="./3jsx.js"></script>
+</body>
+</html>

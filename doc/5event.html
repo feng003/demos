@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event</title>
+    <script src="./build/jquery.min.js"></script>
+    <script src="./build/react.js"></script>
+    <script src="./build/JSXTransformer.js"></script>
+</head>
+<body>
+<div id="exam"></div>
+<div id="example"></div>
+<p>
+    编写事件处理函数：
+    组件：1、 React 自有方法  render componentWillUpdate  componentDidMount  getInitialState
+    2、用户定义方法  handleClick  handleChange  handleSubmit
+</p>
+<ul>
+    事件
+    <li>
+        onClick = {this.handleClick}
+    </li>
+    <li>
+        触摸类：onTouchCancel / onTouchEnd /onTouchMove / onTouchStart
+    </li>
+    <li>
+        键盘类：onKeyDown/ onKeyPress / onKeyUp
+    </li>
+    <li>
+        剪切：onCopy / onCut / onPaste
+    </li>
+    <li>
+        表单类：onChange / onInput（文字输入） / onSubmit （禁止默认跳转行为）
+    </li>
+    <li>
+        焦点：onFocus / onBlur
+    </li>
+    <li>
+        UI元素：onScroll
+    </li>
+    <li>
+        滚动：onWheel
+    </li>
+    <li>
+        鼠标：onClick / onContextMenu（右键） / onDoubleClick / onMouseDown / onMouseEnter(Leave Move Out Over Up)
+    </li>
+    <li>
+        拖拽：onDrop / onDrag (onDragEnd Enter Leave Over)
+    </li>
+</ul>
+<script type="text/jsx" src="5event.js"></script>
+<script type="text/jsx">
+    var HelloWorld = React.createClass({
+        handleChange:function(event){
+            console.log(event.target.value);
+        },
+        render:function(){
+            return <div>
+                <input onChange={this.handleChange} ></input>
+            </div>;
+        },
+    });
+    React.render(<HelloWorld></HelloWorld>,document.getElementById('exam'));
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./build/reacts.js"></script>
+    <script src="./build/JSXTransformer.js"></script>
+    <style>
+        html {
+            font-size: 62.5%;
+        }
+
+        body {
+            font-size: 1.4rem;
+        }
+
+        .tab-selector {
+            margin: 50px;
+        }
+
+        .tab-selector {
+            overflow: hidden;
+        }
+
+        .tab-selector label {
+            float: left;
+            margin-right: 10px;
+            padding: 5px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .tab-selector ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .tab-selector li {
+            cursor: pointer;
+            float: left;
+            padding: 5px 15px;
+            border: 1px solid #ddd;
+            margin: 0 10px;
+            list-style: none;
+        }
+
+        .tab-selector li.selected {
+            border-color: #2175bc;
+            background-color: #2175bc;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+
+<script type="text/jsx">
+    var data = [
+        {name: 'Red', value: 'red'},
+        {name: 'Blue', value: 'blue'},
+        {name: 'Yellow', value: 'yellow'},
+        {name: 'Green', value: 'green'},
+        {name: 'White', value: 'White'}
+    ];
+
+    var TabSelector = React.createClass({
+        getInitialState: function() {
+            return {selected: this.props.selected};
+        },
+
+        handleOnClick: function (evt) {
+            this.setState({'selected': evt.target.getAttribute('data-value')})
+        },
+
+        render: function() {
+            var tabs = this.props.data.map(function (item) {
+                var selected = item.value == this.state.selected ? 'selected' : '';
+                return (
+                        <li data-value={item.value}
+                className={selected}
+                onClick={this.handleOnClick}
+                >{item.name}</li>
+                );
+            }, this);
+
+            return (
+                    <div className="tab-selector">
+                    <label>{this.props.label}</label>
+                        <ul>
+                            {tabs}
+                        </ul>
+                    </div>
+            );
+        }
+    });
+
+    var node = document.createElement('div');
+    document.body.appendChild(node);
+
+    React.render(
+            TabSelector({label: 'Color', data: data, selected: null}), node
+    );
+
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+    <script src="./build/jquery.min.js"></script>
+    <script src="./build/react.js"></script>
+    <script src="./build/JSXTransformer.js"></script>
+</head>
+<body>
+<div id="example"></div>
+<div id="exam"></div>
+
+不可控 <input type="text" defaultValue="HelloWorld" />
+可控  <input type="text" defaultValue={this.state.value} />
+
+<div id="form">
+    <label htmlFor="name">Name</label>
+    <input type="checkbox" value="A" checked="{this.state.checked} onChange={this.handleChange}">
+    <input type="radio" value="A">
+    <input type="file">
+    <textarea name="" cols="30" rows="10" value={this.state.HelloTo} onchange={this.handleChange}></textarea>
+    <select name="" value={this.state.helloTo} onChange={this.handleChange}>
+        <option value="one">一</option>
+        <option value="two">二</option>
+    </select>
+</div>
+<ul>
+    <li>可控组件</li>
+    <li>不可控组件</li>
+    <li>事件处理函数复用</li>
+    <li>表单组件自定义</li>
+</ul>
+
+<div id="register"></div>
+<br/>
+<div id="ncSelfForm">
+
+</div>
+<div id="selfForm">
+
+</div>
+
+<script type="text/jsx" src="7form.js"></script>
+<script type="text/jsx" src="7selfForm.js"></script>
+<script type="text/jsx">
+//    var MyForm = React.createClass({
+//        render:function(){
+//            return (
+//                    <input type="text" defaultValue="HelloWorld" />
+//            )
+//        }
+//    });
+
+    //不可控
+    var YourForm = React.createClass({
+        submitHandler:function(e){
+            e.preventDefault();
+            var helloTo = React.findDOMNode(this.refs.helloTo).value;
+            alert(helloTo);
+        },
+        render:function(){
+            return (
+                    <form onSubmit = {this.submitHandler}>
+                        <input type="text" ref="helloTo" defaultValue="HelloWorld" />
+                            <br />
+                            <button type="submit"> Speak </button>
+                    </form>
+            )
+        }
+    });
+    React.render(<YourForm></YourForm>,document.getElementById("example"));
+
+    //可控
+    var MyForm = React.createClass({
+        getInitialState:function()
+        {
+            return {
+                helloTo:"Hello World"
+            };
+        },
+        handleChange:function(e)
+        {
+            this.setState({
+                helloTo: e.target.value
+            });
+        },
+        submitHandle:function(e)
+        {
+            e.preventDefault();
+            alert(this.state.helloTo);
+        },
+        render:function()
+        {
+            return (
+                    <form onSubmit = {this.submitHandle}>
+                         <input type="text" value={this.state.helloTo} onChange={this.handleChange}/>
+                        <br />
+                        <button type="submit"> Speak </button>
+                    </form>
+                    )
+        },
+    });
+    React.render(<MyForm></MyForm>,document.getElementById('exam'));
+
+
+</script>
+</body>
+</html>
