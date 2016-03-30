@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抽象工厂模式</title>
+</head>
+<body>
+<p>
+    Abstract Factory
+</p>
+<script>
+    var Car = function(){};
+    Car.prototype = {
+        getPrice : function()
+        {
+            return new Error('abstract');
+        }
+    }
+
+    var VehicleFactory = function(subType,superType){
+        if(typeof VehicleFactory[superType] === 'function')
+        {
+            function F(){};
+            F.prototype = new VehicleFactory[superType]();
+            subType.constructor = subType;
+            subType.prototype = new F();
+        }else{
+            throw new Error('未创建该抽象类');
+        }
+    };
+
+</script>
+</body>
+</html>
