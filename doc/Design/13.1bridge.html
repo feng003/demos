@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>桥接模式</title>
+</head>
+<body>
+<h2>
+    桥接模式：在系统沿着多个维度变化的同时，又不增加其复杂度并已达到解耦。
+</h2>
+<div>
+    <ul>
+        <li><a href="" id="username">username</a></li>
+        <li><a href="" id="msg">msg</a></li>
+    </ul>
+</div>
+<script src="A.js"></script>
+<script>
+    var username = $('username');
+    var msg = $('msg');
+    var liA = document.getElementsByTagName('li');
+//    console.log(liA[0]);
+    liA[0].onmouseover = function()
+    {
+        this.style.color = 'red';
+        this.style.background = '#ddd';
+    }
+    liA[0].onmouseout = function()
+    {
+        this.style.color = '#333';
+        this.style.background = '#f5f5f5';
+    }
+
+    function changeColor(dom,color,bg)
+    {
+        dom.style.color = color;
+        dom.style.background = bg;
+    }
+</script>
+</body>
+</html>

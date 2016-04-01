@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>装饰者模式</title>
+</head>
+<body>
+<h2>
+    装饰者模式：在不改变原对象的基础上，通过对其进行包装拓展（添加属性或者方法）使原有对象可以满足用户的更复杂需求。
+</h2>
+<div>
+    <input type="text" id="tel" name="tel"> <span id="warn">1</span>
+</div>
+<script>
+    var telInput = document.getElementById('tel');
+    var warnSpan = document.getElementById('warn');
+
+    telInput.onclick = function()
+    {
+//        warnSpan.style.display = "none";
+        warnSpan.innerText = '';
+    }
+    //装饰者
+    var decorator = function(input,fn)
+    {
+        var input = document.getElementById(input);
+        if(typeof input.onclick === 'function')
+        {
+            var oldClickFn = input.onclick;
+            input.onclick = function(){
+                oldClickFn();
+                fn();
+            }
+        }else{
+            input.onclick = fn;
+        }
+    }
+    decorator('tel',function(){
+        warnSpan.innerText = '2';
+    })
+</script>
+</body>
+</html>

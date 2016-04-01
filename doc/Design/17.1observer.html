@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>观察者模式</title>
+</head>
+<body>
+<h2>
+    观察者模式 又被称作发布-订阅模式或者消息机制，定义了一种依赖关系，解决了主体对象与观察者之间功能的耦合。
+    观察者对象有一个消息容器和 三个方法：订阅消息，取消订阅消息、发送订阅消息。（与dom事件的异同点）
+</h2>
+<div>
+
+</div>
+<script src="A.js"></script>
+<script>
+    Observer.regist('test',function(e){
+        console.log(e.type, e.args.msg);
+    })
+    Observer.fire('test',{msg:'传递参数'});
+    Observer.remove('test',function(e){
+        console.log(1,e);
+    })
+</script>
+</body>
+</html>

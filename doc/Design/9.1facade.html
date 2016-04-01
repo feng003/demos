@@ -17,6 +17,7 @@
         </p>
     </div>
     <input type="button" value="submit" id="myInput">
+    <script src="A.js"></script>
         <script>
             document.onclick = function(e)
             {
@@ -36,23 +37,6 @@
                 console.log('second bind event');
             }
 
-            /**
-             * 外观模式实现
-             * @param dom
-             * @param type
-             * @param fn
-             */
-            function addEvent(dom,type,fn)
-            {
-                if(dom.addEventListener)
-                {
-                    dom.addEventListener(type,fn,false);
-                }else if(dom.attachEvent){
-                    dom.attachEvent('on'+type,fn);
-                }else{
-                    dom['on'+type] = fn;
-                }
-            }
             var myInput = document.getElementById('myInput');
             addEvent(myInput,'click',function(){
                 console.log('frist bind event');
@@ -60,30 +44,6 @@
             addEvent(myInput,'click',function(){
                 console.log('third bind event');
             })
-
-            //兼容性
-            //获取事件对象
-            var getEvent = function(event)
-            {
-                //标准浏览器返回event ie下 window.event
-                return event || window.event;
-            }
-            //获取元素
-            var getTarget = function(event)
-            {
-                var event = getEvent(event);
-                return event.target || event.srcElement;
-            }
-            //阻止默认行为
-            var preventDefault = function(event)
-            {
-                var event = getEvent(event);
-                if(event.preventDefault){
-                    event.preventDefault();
-                }else{
-                    event.returnValue = false;
-                }
-            }
 
         </script>
     </body>
