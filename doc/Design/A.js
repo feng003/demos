@@ -58,7 +58,6 @@ var Observer = (function(){
             }else{
                 _message[type].push(fn);
             }
-            console.log(_message);
         },
         fire:function(type,args){
             if(!_message[type])
@@ -71,7 +70,6 @@ var Observer = (function(){
             {
                 _message[type][i].call(this,events);
             }
-            console.log(_message);
         },
         remove:function(type,fn){
             if(_message[type] instanceof  Array)
