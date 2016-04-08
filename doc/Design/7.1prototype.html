@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prototype</title>
+</head>
+<body>
+<h2>
+    js中的继承是靠原型链实现。原型模式就是将原型对象指向创建对象的类，是这些类共享原型对象的方法与属性。
+</h2>
+<div>
+    <p>
+        原型模式特点在任何时候都可以对基类或者子类进行方法的拓展，而且所有被实例化的对象或者类都能获取这些方法
+    </p>
+</div>
+<script src="A.js"></script>
+<script>
+    var LoopImages = function(imgArr,container)
+    {
+        this.imagesArray = imgArr;
+        this.container = container;
+        this.createImage = function(){}
+        this.changeImage = function(){}
+    }
+
+    var sliderLoopImg = function(imgArr,container)
+    {
+        LoopImages.call(this,imgArr,container);
+
+        this.changeImage = function()
+        {
+            console.log('sliderLoopImg changeImage function');
+        }
+    }
+
+    var FadeLoopImg = function(imgArr,container,arrow)
+    {
+        LoopImages.call(this,imgArr,container);
+        this.arrow = arrow;
+        this.changeImage = function()
+        {
+            console.log('FadeLoopImg changeImage function');
+        }
+    }
+
+    var fadeImga = new FadeLoopImg(['1.jpg','2.jpg','3.jpg'],'slide',[]);
+    fadeImga.changeImage();
+
+    var penguin = prototypeExtend({
+        speed : 20,
+        swim:function()
+        {
+            console.log('speed'+this.speed);
+        }
+    },{
+        run : function(speed)
+        {
+            console.log('speed'+speed);
+        }
+    },{
+        jump:function()
+        {
+            console.log('jump');
+        }
+    })
+
+    penguin.swim();
+    penguin.run(10);
+    penguin.jump();
+</script>
+</body>
+</html>

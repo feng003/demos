@@ -83,3 +83,23 @@ var Observer = (function(){
         }
     }
 })();
+
+/**
+ * 原型继承
+ * @returns {F}
+ */
+function prototypeExtend()
+{
+    var F = function(){},
+        args = arguments,
+        i = 0,
+        len = args.length;
+    for(;i<len;i++)
+    {
+        for(var j in args[i])
+        {
+            F.prototype[j] = args[i][j];
+        }
+    }
+    return new F();
+}
