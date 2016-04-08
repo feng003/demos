@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>singleton</title>
+</head>
+<body>
+<h2>
+    单例模式 是只准许实例化一次 的 对象类。用一个对象来规划一个命名空间，来管理对象上的属性和方法。
+</h2>
+<div>
+    <p>
+        单例模式：命名空间；还可以通过单例模式来管理代码库的各个模块;无法修改的静态变量;惰性单例。
+    </p>
+</div>
+<script src="A.js"></script>
+<script>
+    var Zhang ={
+        g:function(id)
+        {
+            return document.getElementById(id);
+        },
+        css:function(id,key,value)
+        {
+            this.g(id).style[key] = value;
+        }
+    };
+
+    var Conf = (function(){
+        var conf = {
+            MAX_NUM : 100,
+            MIN_NUM : 1,
+            COUNT: 100
+        };
+
+        return {
+            get : function(name){
+                return conf[name] ? conf[name] : null;
+            }
+        }
+    })();
+    var count = Conf.get('COUNT');
+    console.log(count);
+
+    var LazySingle = (function(){
+        //单例实例引用
+        var _instance = null;
+        function Single()
+        {
+            return {
+                publicMethod : function () {console.log('method')},
+                publicProperty : '1.0'
+            }
+        }
+        //获取单例对象接口
+        return function (){
+            if(!_instance)
+            {
+                _instance = Single();
+            }
+            //返回单例
+            return _instance;
+        }
+    })();
+
+    console.log(LazySingle().publicProperty)
+    console.log(LazySingle().publicMethod());
+</script>
+</body>
+</html>

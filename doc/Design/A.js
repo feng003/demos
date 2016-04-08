@@ -2,6 +2,13 @@
  * Created by zhang on 2016/3/31.
  */
 
+var A = {
+    Util:{},
+    Tool:{},
+    Ajax:{},
+    other:{}
+};
+
 var $ = function(id)
 {
     return document.getElementById(id);
@@ -86,18 +93,21 @@ var Observer = (function(){
 
 /**
  * 原型继承
+ * 对模板引用类型的属性实质上进行了  浅复制（引用类型属性共享）
  * @returns {F}
  */
 function prototypeExtend()
 {
     var F = function(){},
-        args = arguments,
+        args = arguments,   //模板对象参数序列
         i = 0,
         len = args.length;
     for(;i<len;i++)
     {
+        //遍历每个模板对象中的属性
         for(var j in args[i])
         {
+            //将这些属性复制到缓存类原型中
             F.prototype[j] = args[i][j];
         }
     }

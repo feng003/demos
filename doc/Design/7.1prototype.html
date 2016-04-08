@@ -15,36 +15,67 @@
 </div>
 <script src="A.js"></script>
 <script>
+//    var LoopImages = function(imgArr,container)
+//    {
+//        this.imagesArray = imgArr;
+//        this.container = container;
+//        this.createImage = function(){}
+//        this.changeImage = function(){}
+//    }
+
+//    var sliderLoopImg = function(imgArr,container)
+//    {
+//        LoopImages.call(this,imgArr,container);
+//
+//        this.changeImage = function()
+//        {
+//            console.log('sliderLoopImg changeImage function');
+//        }
+//    }
+//
+//    var FadeLoopImg = function(imgArr,container,arrow)
+//    {
+//        LoopImages.call(this,imgArr,container);
+//        this.arrow = arrow;
+//        this.changeImage = function()
+//        {
+//            console.log('FadeLoopImg changeImage function');
+//        }
+//    }
+
+//    var fadeImga = new FadeLoopImg(['1.jpg','2.jpg','3.jpg'],'slide',[]);
+//    fadeImga.changeImage();
+
     var LoopImages = function(imgArr,container)
     {
         this.imagesArray = imgArr;
-        this.container = container;
-        this.createImage = function(){}
-        this.changeImage = function(){}
-    }
+        this.container   = container;
+    };
 
-    var sliderLoopImg = function(imgArr,container)
+    LoopImages.prototype = {
+        createImage : function()
+        {
+            console.log('createImage');
+        },
+        changeImage : function()
+        {
+            console.log('changeImage');
+        }
+    };
+
+    var SlideLoopImg = function(imgArr,container)
     {
         LoopImages.call(this,imgArr,container);
+    };
 
-        this.changeImage = function()
-        {
-            console.log('sliderLoopImg changeImage function');
-        }
-    }
-
-    var FadeLoopImg = function(imgArr,container,arrow)
+    SlideLoopImg.prototype = new LoopImages();
+    SlideLoopImg.prototype.changeImage = function()
     {
-        LoopImages.call(this,imgArr,container);
-        this.arrow = arrow;
-        this.changeImage = function()
-        {
-            console.log('FadeLoopImg changeImage function');
-        }
-    }
-
-    var fadeImga = new FadeLoopImg(['1.jpg','2.jpg','3.jpg'],'slide',[]);
-    fadeImga.changeImage();
+        console.log('SlideLoopImg');
+    };
+    var fadeImg = new SlideLoopImg(['1.jpg','2.jpg','3.jpg'],'slide');
+    console.log(fadeImg.container);
+    fadeImg.changeImage();
 
     var penguin = prototypeExtend({
         speed : 20,
@@ -64,9 +95,9 @@
         }
     })
 
-    penguin.swim();
-    penguin.run(10);
-    penguin.jump();
+//    penguin.swim();
+//    penguin.run(10);
+//    penguin.jump();
 </script>
 </body>
 </html>
