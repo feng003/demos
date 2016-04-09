@@ -1,18 +1,145 @@
 /**
  * Created by zhang on 2016/3/31.
  */
+"use strict";
+var Z = {
+    //array
+    A : {
+        /**
+         *  Object.isArray(object) -> Boolean
+         *  - object (Object): The object to test.
+         *
+         *  Returns `true` if `object` is an [[Array]]; `false` otherwise.
+         *
+         *  ##### Examples
+         *
+         *      Object.isArray([]);
+         *      //-> true
+         *
+         *      Object.isArray({ });
+         *      //-> false
+         **/
+        isArray : function (obj)
+        {
+            return Object.prototype.toString.call(obj) === '[object Array]';
+        },
 
-var A = {
+        /**
+         * 实现一个遍历数组的方法，针对数组中每一个元素执行fn函数，并将数组索引和元素作为参数传递
+         * @param arr
+         * @param fn
+         */
+        each : function (arr, fn)
+        {
+            for (var i in arr)
+            {
+                fn(arr[i], i);
+            }
+        },
+
+        /**
+         * 对数组进行去重操作，只考虑数组中元素为数字或字符串，返回一个去重后的数组
+         * 用的是hash表,把已经出现过的通过下标的形式存入一个object内。下标的引用要比用indexOf搜索数组快的多。
+         * http://www.cnblogs.com/fumj/archive/2012/09/09/2677711.html
+         * @param arr
+         * @returns {Array}
+         */
+        uniqArray : function (arr)
+        {
+            var n={},r=[]; //n为hash r临时数组
+            for(var i=0;i<arr.length;i++)
+            {
+                if(!n[arr[i]])
+                {
+                    n[arr[i]] = true;
+                    r.push(arr[i]);
+                }
+            }
+            return r;
+        }
+    },
+    //base function
+    B : {
+        /**
+         *
+         * @param url
+         * @param callback
+         */
+        loadScript : function (url,callback)
+        {
+            var script = document.createElement('script');
+            script.type = "text/javascript";
+            if(script.readyState)
+            {
+                script.onreadystatechange = function()
+                {
+                    if(script.readyState == 'loaded' || script.readyState == 'complete')
+                    {
+                        script.onreadystatechange = null;
+                        callback();
+                    }
+                };
+            }else{
+                script.onload = function()
+                {
+                    callback();
+                }
+            }
+            script.src = url;
+            document.getElementsByTagName("head")[0].appendChild(script);
+        }
+    },
+    //dom
+    D : {
+        $ : function (selector)
+        {
+            return document.querySelector(selector);
+        }
+    },
+    //function
+    F : {
+        /**
+         *  Object.isFunction(object) -> Boolean
+         *  - object (Object): The object to test.
+         *
+         *  Returns `true` if `object` is of type [[Function]]; `false` otherwise.
+         *
+         *  ##### Examples
+         *
+         *      Object.isFunction($);
+         *      //-> true
+         *
+         *      Object.isFunction(123);
+         *      //-> false
+         **/
+        isFunction : function (fn)
+        {
+            return Object.prototype.toString.call(fn)=== '[object Function]';
+        }
+    },
+    //object
+    O : {},
+    //string
+    S : {
+
+        /**
+         * 实现一个简单的trim函数，用于去除一个字符串，头部和尾部的空白字符
+         * stringObject.replace(regexp/substr,replacement) 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。
+         * @param str
+         * @returns {*}
+         */
+        simpleTrim : function (str)
+        {
+            return str.replace(/^\s+/, '').replace(/\s+$/, '');
+        }
+    },
+    //
     Util:{},
+    //
     Tool:{},
-    Ajax:{},
-    other:{}
+    //ajax
+    Ajax:{}
 };
-
-var $ = function(id)
-{
-    return document.getElementById(id);
-}
 
 /**
  * 外观模式实现
