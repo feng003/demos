@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>prototype</title>
+</head>
+<body>
+<div>
+    <p>防止污染原生对象function，抽象出一个统一添加方法的功能方法</p>
+</div>
+<script>
+    //函数式调用
+    Function.prototype.addMethod = function(name,fn)
+    {
+        this[name] = fn;
+    };
+
+    //类式调用方法
+//    Function.prototype.addMethod = function(name,fn)
+//    {
+//        this.prototype[name] = fn;
+//    }
+
+    var methods = function(){};
+    methods.addMethod('checkName',function(){
+        console.log('check');
+    });
+    methods.checkName();
+</script>
+</body>
+</html>

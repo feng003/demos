@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>javascript base</title>
+</head>
+<body>
+<h2>
+    JavaScript中的变量提升（Hoisting）:把定义在后面的东东（变量或函数）提升到前面中定义。而函数提升（1、函数表达式，2、函数声明方式），只有函数声明方式才能被提升。
+</h2>
+<h3>
+    scoping  块级作用域（let）;只有函数才会创建新的作用域。
+</h3>
+<div id="exam">
+    <p>函数也是变量</p>
+</div>
+<!--<script src="prototype.js"></script>-->
+<script src="A.js"></script>
+<script src="exam.js"></script>
+<script>
+
+    function checkName(name,type)
+    {
+        console.log(arguments);
+    }
+    function checkEmail(email)
+    {
+        console.log(email);
+    }
+    function checkPassword(pwd)
+    {
+        console.log(pwd);
+    }
+    checkName('username','type');
+    //函数也是变量
+    var checkName = function(name)
+    {
+        console.log(name+'variable');
+    }
+    checkName('variable');
+
+
+    //变量提升（变量或函数）
+    function mytest()
+    {
+        foo();
+        function foo()
+        {
+            console.log('mytest');
+        }
+    }
+    mytest();  //mytest
+
+    function test(){
+        foo();
+        var foo = function()
+        {
+            console.log('test');
+        }
+    }
+    test(); // foo is not a function
+
+</script>
+</body>
+</html>
