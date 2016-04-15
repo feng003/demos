@@ -5,9 +5,13 @@
     <title>抽象工厂模式</title>
 </head>
 <body>
+<h2>
+
+</h2>
 <p>
     Abstract Factory
 </p>
+<script src="A.js"></script>
 <script>
     var Car = function(){};
     Car.prototype = {
@@ -15,7 +19,7 @@
         {
             return new Error('abstract');
         }
-    }
+    };
 
     var VehicleFactory = function(subType,superType){
         if(typeof VehicleFactory[superType] === 'function')

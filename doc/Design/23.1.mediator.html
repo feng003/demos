@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>中介者Mediator</title>
+</head>
+<body>
+<h2>
+    中介者模式:通过中介者对象封装一系列对象之间的交互，使对象之间不再相互引用，降低他们之间的耦合。有时中介者对象也可改变对象之间的交互。
+</h2>
+<div>
+    <p>
+        通过中介者对象，我们可以自由调度其他模块，这解决模块间解耦的问题。
+    </p>
+</div>
+<script src="A.js"></script>
+<script>
+    var Mediator = function(){
+        var _msg = {};
+        return {
+            register:function(type,action){
+                if(_msg[type])
+                {
+                    _msg[type].push(action);
+                }else{
+                    _msg[type] = [];
+                    _msg[type].push(action);
+                }
+            },
+            send:function(type){
+                if(_msg[type]){
+                    for(var i= 0,len=_msg[type].length;i<len;i++)
+                    {
+                        _msg[type][i] && _msg[type][i]();
+                    }
+                }
+            }
+        }
+    }();
+    Mediator.register('demo',function(){
+        console.log('first');
+    });
+    Mediator.register('demo',function(){
+        console.log('second');
+    });
+    Mediator.send('demo');
+</script>
+</body>
+</html>

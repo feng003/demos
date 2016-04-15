@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>访问者模式 visitor</title>
+</head>
+<body>
+<h2>
+    访问者模式：这对于对象结构中的元素，定义在不改变该对象的前提下访问结构中元素的新方法
+</h2>
+<div>
+    <p>
+        call apply toString
+    </p>
+    <input type="button" value="button" id="button">
+</div>
+<script src="A.js"></script>
+<script>
+    //call apply
+    function bindIEEvent(dom,type,fn,data)
+    {
+        var data = data || {};
+        dom.attachEvent('on'+type,function(e)
+        {
+            fn.call(dom,e,data);
+        });
+    };
+//    bindIEEvent(Z.D.$('#button'),'click',function(e,d){
+//        Z.D.$('p').innerHTML = e.type + d.text + this.tagName;
+//    },{text:'test demo'});
+
+    var Visitor = (function(){
+        return {
+            //截取方法
+            splice : function(){
+                var args = Array.prototype.splice.call(arguments, 1);
+                return Array.prototype.splice.apply(arguments[0], args);
+            },
+            //追加数据
+            push : function(){
+                var len = arguments[0].length || 0;
+                var args = this.splice(arguments,1);
+                arguments[0].length = len + arguments.length - 1;
+
+                return Array.prototype.push.apply(arguments[0],args);
+            },
+            //弹出最后一次添加的元素
+            pop : function(){
+                return Array.prototype.pop.apply(arguments[0]);
+            }
+        }
+    })();
+
+    var a = new Object();
+    console.log(a.length);
+    Visitor.push(a, '1,2,3,4',2,1);
+    console.log(a);
+    console.log(a.length);
+
+</script>
+</body>
+</html>
