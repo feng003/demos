@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>
-
+    迭代器模式：在不暴露对象内部结构的同时，可以数序地访问聚合对象内部的元素。
 </h2>
 <div>
     <p>
@@ -14,7 +14,55 @@
     </p>
 </div>
 <script>
+    var Iterator = function(items,container)
+    {
+        var container = container && document.getElementById(container)||document,
+                item = container.getElementsByTagName(items),
+                length = item.length,
+                index = 0;
+        var splice = [].splice;
+        return {
+            first : function(){
+                index = 0;
+                return items[index];
+            },
+            second : function(){
+                index = length-1;
+                return items[index];
+            },
+            pre : function(){
+                if(--index >0){
+                    return items[index];
+                }else{
+                    index = 0;
+                    return null;
+                }
+            },
+            next : function(){
+                if(++index<length)
+                {
+                    return items[index];
+                }else{
+                    index = length-1;
+                    return null;
+                }
+            },
+            get :function(num){
+                index = num >= 0 ? num%length : num%length +length;
 
+                return items[index];
+            },
+            dealEach : function(fn){
+                var args = splice.call(arguments,1);
+                for(var i=0;i<length;i++)
+                {
+                    fn.apply(items[i],args);
+                }
+            },
+            dealItem : function(){},
+            exclusive : function(){}
+        }
+    }
 </script>
 </body>
 </html>

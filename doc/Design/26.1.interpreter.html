@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>解释器模式interpreter</title>
+</head>
+<body>
+<h2>
+    解释器模式：对于一种语言，给出其文法表示形式，并定义一种解释器，通过使用这种解释器是来解释语言中定义的句子
+</h2>
+<div>
+    <p>
+
+    </p>
+</div>
+<div class="wrap">
+    <div class="link">
+        <a href="#"></a>
+    </div>
+    <div class="button">
+        <button>text</button>
+    </div>
+</div>
+<script src="A.js"></script>
+<script>
+//    XPath 解释器
+    var Interpreter = (function(){
+        //获取兄弟元素名称
+        function getSublingName(node)
+        {
+            if(node.previousSibling)
+            {
+                var name = '',
+                        count = 1,
+                        nodeName = node.nodeName,
+                        sibling  = node.previousSibling;
+                while(sibling)
+                {
+                    if(sibling.nodeType ==1 && sibling.nodeType === node.nodeType &&sibling.nodeName)
+                    {
+                        if(nodeName == sibling.nodeName)
+                        {
+                            name += ++count;
+                        }else{
+                            count = 1;
+                            name += '|' + sibling.nodeName.toUpperCase();
+                        }
+                    }
+
+                    sibling = sibling.previousSibling;
+                }
+
+                return name;
+            }else{
+                return '';
+            }
+        }
+
+        /**
+         * node 目标节点
+         * wrap 容器节点
+         */
+        return function(node,wrap)
+        {
+//            console.log(node);
+            var path = [],
+                    wrap = wrap || document; //默认为document
+            if(node === wrap)
+            {
+                if(wrap.nodeType ==1)
+                {
+                    path.push(warp.nodeName.toUpperCase());
+                }
+                return path;
+            }
+
+            if(node.parentNode !== wrap)
+            {
+                path = arguments.callee(node.parentNode,wrap);
+            }else{
+                if(wrap.nodeType == 1)
+                {
+                    path.push(wrap.nodeName.toLocaleUpperCase());
+                }
+            }
+
+            var sublingsName = getSublingName(node);
+            console.log(sublingsName);
+            if(node.nodeType == 1)
+            {
+                path.push(node.nodeName.toLocaleUpperCase() + sublingsName);
+            }
+
+            return path;
+        }
+
+    })();
+
+//    console.log(document.querySelector('button'));
+//    var path = Interpreter(document.querySelector('button'));
+    var path = Interpreter(document.querySelector('h2')); //HTML#BODY|HEAD#H2
+    console.log(path.join('#'));
+</script>
+</body>
+</html>
