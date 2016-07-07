@@ -2,23 +2,12 @@
  * Created by zhang on 2016/3/21.
  */
 
-//var React = require('react');
-//var ReactDOM = require('react-dom');
-
-var Todo = React.createClass({
-
-    render:function(){
-        return <li></li>
-    }
-});
-
 var TodoList = React.createClass({
-
     render: function() {
-        var createItem = this.props.items.map(function(item) {
-            return <Todo> {item} </Todo>;
-        });
-        return <ul>{createItem}</ul>;
+        var createItem = function(item) {
+            return <li key={item.id}>{item.text}</li>;
+        };
+        return <ul>{this.props.items.map(createItem)}</ul>;
     }
 });
 var TodoApp = React.createClass({
