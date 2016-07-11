@@ -5,6 +5,7 @@ var requestHandlers = require('./requestHandlers');
 var handler = {};
 handler['/']       = requestHandlers.index;
 handler['/index']  = requestHandlers.index;
+handler['/doIndex']= requestHandlers.doIndex;
 handler['/start']  = requestHandlers.start;
 handler['/home']   = requestHandlers.home;
 handler['/upload'] = requestHandlers.upload;

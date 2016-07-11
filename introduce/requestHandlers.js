@@ -1,24 +1,23 @@
 var querystring = require("querystring");
-var fs    = require("fs");
-var util = require("util");
-var formidable = require("formidable");
-var exec = require('child_process').exec;
+var fs          = require("fs");
+var util        = require("util");
+var formidable  = require("formidable");
+var exec        = require('child_process').exec;
 
 // var MongoClient = require('mongodb').MongoClient;
 var assert   = require('assert');
 // var ObjectId = require('mongodb').ObjectID;
 var url      = 'mongodb://localhost:27017/node';
 
-function index(response, postData) {
-    console.log("Request handler 'index' was called.");
-
+function index(response)
+{
     var body = '<html>' +
         '<head>' +
         '<meta http-equiv="Content-Type" content="text/html; ' +
         'charset=UTF-8" />' +
         '</head>' +
         '<body>' +
-        '<form action="/upload" method="post">' +
+        '<form action="/doIndex" method="post">' +
         '<input name="title" type="text" />' +
         '<textarea name="text" rows="20" cols="60"></textarea>' +
         '<input type="submit" value="Submit text" />' +
@@ -31,8 +30,13 @@ function index(response, postData) {
     response.end();
 }
 
+function doIndex(req,postData){
+    req.writeHead(200, {"Content-Type": "text/plain"});
+    req.write("You've sent: " + querystring.parse(postData).text);
+    req.end();
+}
+
 function start(res, postData) {
-    console.log("request handle 'start' was called");
     var content = "empty";
     //exec('ls -lah',
     // exec('find / ',
@@ -48,9 +52,8 @@ function start(res, postData) {
     });
 }
 
-function find(response, postData) {
-    console.log("Request handler 'find' was called.");
-
+function find(response, postData)
+{
     exec("find /", {timeout: 10000, maxBuffer: 20000 * 1024}, function (error, stdout, stderr) {
         response.writeHead(200, {"Content-Type": "text/plain"});
         response.write(stdout);
@@ -59,20 +62,6 @@ function find(response, postData) {
 }
 
 function home(response){
-    console.log("Request handler 'start' was called.");
-
-    //var body = '<html>'+
-    //    '<head>'+
-    //    '<meta http-equiv="Content-Type" content="text/html; '+
-    //    'charset=UTF-8" />'+
-    //    '</head>'+
-    //    '<body>'+
-    //    '<form action="/upload" method="post">'+
-    //    '<textarea name="text" rows="20" cols="60"></textarea>'+
-    //    '<input type="submit" value="Submit text" />'+
-    //    '</form>'+
-    //    '</body>'+
-    //    '</html>';
 
     var body = '<html>'+
         '<head>'+
@@ -96,10 +85,7 @@ function home(response){
 
 function upload(res, req) {
     console.log("request handler ' upload' was called");
-    // return "hello upload";
-    //res.writeHead(200, {"Content-Type": "text/plain"});
-    //res.write("You've sent: " + querystring.parse(postData).text);
-    //res.end();
+
     var form = new formidable.IncomingForm();
          form.uploadDir = '/tmp';
     form.parse(req,function(err,fields,files){
@@ -198,7 +184,8 @@ function mongoinsert(res)
  * mongo 查找数据
  * @param res
  */
-function mongofind(res) {
+function mongofind(res)
+{
     console.log("request handler ' mongofind' was called");
     var findRestaurants = function (db, callback) {
         var cursor = db.collection('restaurants').find();
@@ -228,7 +215,8 @@ function mongofind(res) {
  * mongo 删除数据
  * @param res
  */
-function mongodel(res) {
+function mongodel(res)
+{
     var removeRestaurants = function (db, callback) {
         db.collection('restaurants').deleteMany(
             {"borough": "Manhattan"},
@@ -248,13 +236,14 @@ function mongodel(res) {
     res.end();
 }
 
-exports.index = index;
-exports.start  = start;
-exports.find  = find;
-exports.home   = home;
-exports.upload = upload;
-exports.show   = show;
-exports.mongo  = mongo;
+exports.index   = index;
+exports.doIndex = doIndex;
+exports.start   = start;
+exports.find    = find;
+exports.home    = home;
+exports.upload  = upload;
+exports.show    = show;
+exports.mongo   = mongo;
 exports.mongoinsert  = mongoinsert;
 exports.mongofind = mongofind;
 exports.mongodel  = mongodel;
