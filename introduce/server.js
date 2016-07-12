@@ -16,6 +16,7 @@ function start(route, handle)
     http.createServer(onRequest).listen(8888);
     console.log("Server has started.");
 }
+exports.start = start;
 
 //function start(route,handle){
 //    function onRequest(req,res){
@@ -40,5 +41,3 @@ function start(route, handle)
 //    http.createServer(onRequest).listen(8800);
 //    console.log('Server has started.');
 //}
-
-exports.start = start;

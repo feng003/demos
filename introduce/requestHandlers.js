@@ -9,7 +9,7 @@ var assert   = require('assert');
 // var ObjectId = require('mongodb').ObjectID;
 var url      = 'mongodb://localhost:27017/node';
 
-function index(response)
+function index(response,postData)
 {
     var body = '<html>' +
         '<head>' +
@@ -30,10 +30,14 @@ function index(response)
     response.end();
 }
 
-function doIndex(req,postData){
-    req.writeHead(200, {"Content-Type": "text/plain"});
-    req.write("You've sent: " + querystring.parse(postData).text);
-    req.end();
+function doIndex(response,request){
+    var form = new formidable.IncomingForm();
+    form.parse(request,function(error,fields,files){
+        console.log(fields);
+        response.writeHead(200, {"Content-Type": "text/plain"});
+        response.write("You've sent: " +  fields.title+"##"+fields.text);
+        response.end();
+    });
 }
 
 function start(res, postData) {
