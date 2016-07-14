@@ -1,4 +1,6 @@
 /.idea
-introduce/node_modules
-koa/hello/node_modules
+/introduce/node_modules
+/koa/hello/node_modules
+/koa/book/node_modules
 /node/express/microblog/node_modules
+/node/express/demo/node_modules

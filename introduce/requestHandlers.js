@@ -4,7 +4,7 @@ var util        = require("util");
 var formidable  = require("formidable");
 var exec        = require('child_process').exec;
 
-// var MongoClient = require('mongodb').MongoClient;
+//var MongoClient = require('mongodb').MongoClient;
 var assert   = require('assert');
 // var ObjectId = require('mongodb').ObjectID;
 var url      = 'mongodb://localhost:27017/node';
@@ -19,6 +19,7 @@ function index(response,postData)
         '<body>' +
         '<form action="/doIndex" method="post">' +
         '<input name="title" type="text" />' +
+        '<input name="passwd" type="password" />' +
         '<textarea name="text" rows="20" cols="60"></textarea>' +
         '<input type="submit" value="Submit text" />' +
         '</form>' +
