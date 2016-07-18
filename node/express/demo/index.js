@@ -3,11 +3,17 @@
  */
 
 var express = require('express');
-var http = require("http");
-var path = require('path');
-var app  = express();
+var path    = require('path');
+var http    = require("http");
+var favicon = require('serve-favicon');
+var logger  = require('morgan');
+var bodyParser   = require('body-parser');
+var app    = express();
 
-//var routes = require('./routes')(app);
+var routes = require('./routes/index');
+var api    = require('./routes/api');
+
+app.get("/api",api.index);
 
 //app.use(function(req,res,next){
 //    console.log(req.method + '@request@'+ req.url);
@@ -45,30 +51,23 @@ var app  = express();
 //    next();
 //});
 
-app.get('/',function(req,res){
-    //res.end('welecome to home');
-    res.render("index",{message:"hello home",title:"home"});
-});
-
-app.get("/about",function(req,res){
-    res.end('welecome to about');
-});
-
-app.get("/hello/:who?",function(req,res){
-    if(req.params.who){
-        res.end("hello "+ req.params.who + ".");
-    }else{
-        res.end("hello Guest");
-    }
-});
 
 //app.get("*",function(req,res){
 //    res.end('404!');
 //});
 
+app.set('port',process.env.PORT || 8080);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-//app.use(express.static(__dirname + "/public"));
-app.listen(8080);
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use('/', routes);
+//app.use('/user', user);
+
+app.use(express.static(__dirname + "/public"));
+
+app.listen(app.get('port'));
