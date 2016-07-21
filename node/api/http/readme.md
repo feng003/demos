@@ -12,6 +12,7 @@
 
     request.url
     request.method
+    header:  http请求的所有http头信息
     request.params (get post)
 
     request.ip    获得http请求的ip地址
