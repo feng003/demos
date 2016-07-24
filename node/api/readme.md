@@ -2,9 +2,9 @@
 
 5. [fs](http://nodeapi.ucdok.com/api/fs.html) 与文件系统交互。
 
-6. [path]() 处理文件路径。
+6. [path](./path) 处理文件路径。
 
-7. [process]()
+7. [process](./process)
 
 8. [buffer](http://nodeapi.ucdok.com/api/buffer.html)
 
@@ -28,7 +28,7 @@
 
 18. koa
 
-[url](http://nodeapi.ucdok.com/api/url.html) 解析URL。
+19. [url](http://nodeapi.ucdok.com/api/url.html) 解析URL。
 
 [Query String](http://nodeapi.ucdok.com/#/api/querystring.html) 解析URL的查询字符串。
 

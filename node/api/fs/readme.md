@@ -1,3 +1,16 @@
+> fs filesystem
+
+    readFileSync()
+    writeFileSync()
+    exists()
+    mkdir() writeFile() readFile()
+    mkdirSync()  writeFileSync() readFileSync()
+    readDir()
+    stat()    //判断正在处理的到底是一个文件，还是一个目录
+    watchfile() unwatchfile()  //监听一个文件
+    createReadStream()   //用于打开大型的文本文件，创建一个读取操作的数据流
+    createWriteStream()  //创建一个写入数据流对象
+
 events
 
     var EventEmitter = require('events').EventEmitter;
