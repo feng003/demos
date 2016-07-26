@@ -6,8 +6,20 @@
     var blogEngine = require('./blog');
     //Express框架等于在http模块之上，加了一个中间层
     router.get('/',function(req,res){
-        //res.end('welecome to home');
-        res.render("index",{message:"hello home",title:"home",entries:blogEngine.getBlogEntries()});
+        var sess = req.session;
+        console.log(sess);
+        if(sess.views){
+            sess.views++;
+            res.setHeader("Content-Type","text/html");
+            res.write('<p>'+ sess.views +'</p>');
+            res.write('<p>expires in: ' + (sess.cookie.maxAge / 1000) + 's</p>');
+            res.end();
+        }else{
+            sess.views = 1;
+            res.end('welcome to the session demo');
+        }
+
+        //res.render("login",{message:"hello home",title:"home",entries:blogEngine.getBlogEntries()});
     });
 
     router.get("/about",function(req,res){
@@ -31,7 +43,8 @@
     });
 
     router.get('/admin',function(req,res){
-        res.send('hello admin');
+        //res.send('hello admin');
+        res.render("login",{message:"hello home",title:"home",entries:blogEngine.getBlogEntries()});
     });
 
     module.exports = router;

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title><%= title %></title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/stylesheets/login.css">
+    <script type="text/javascript" src="style/js/jquery.min.js"></script>
+    <script type="text/javascript" src="style/js/jquery.form.js"></script>
+    <script type="text/javascript" src="style/js/tooltips.js"></script>
+    <script type="text/javascript">
+		//支持Enter键登录
+		document.onkeydown = function(e){
+			if(!e) e = window.event;
+			if((e.keyCode || e.which) == 13){
+				var obtnLogin=document.getElementById("submit_btn")
+				obtnLogin.focus();
+			}
+		}
+
+    	$(function(){
+			//提交表单
+			$('#submit_btn').click(function(){
+				show_loading();
+				var myReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/; //邮件正则
+				if($('.email').val() == ''){
+					show_err_msg('邮箱还没填呢！');
+					$('.email').focus();
+				}else if(!myReg.test($('.email').val())){
+					show_err_msg('您的邮箱格式错咯！');
+					$('.email').focus();
+				}else if($('.password').val() == ''){
+					show_err_msg('密码还没填呢！');
+					$('.password').focus();
+				}else{
+					//ajax提交表单，#login_form为表单的ID。 如：$('#login_form').ajaxSubmit(function(data) { ... });
+					show_msg('登录成功咯！  正在为您跳转...','/');
+				}
+			});
+		});
+    </script>
+</head>
+<body>
+	<header>后台管理员登录</header>
+ 	<div class="content">
+    	<form action="login.html" method="post" id="login_form">
+    	<table width="100%">
+        	<thead>
+            	<td colspan="2" class="thead">后台管理员登录</td>
+            </thead>
+            <tbody>
+                <tr>
+                  <th><em class="red">*</em> 邮箱：</th>
+                  <td><input type="text" value="" name="" class="email ipt"> <span class="tooltip">(说明) <span>*表示必填哦,格式如：demo@qq.com</span></span></td>
+                </tr>
+                <tr>
+                  <th><em class="red">*</em> 密码：</th>
+                  <td><input type="password" value="" name="" class="password ipt"></td>
+                </tr>
+                <tr>
+                  <th class="pd15"></th>
+                  <td class="pd15">
+                  	<button id="submit_btn" type="button">登录</button>
+                    <p class="line"><input type="checkbox" id="remember" value=""> <label for="remember">记住我</label></p>
+                  </td>
+                </tr>
+            </tbody>
+        </table>
+        </form>
+    </div>
+</body>
+</html>
