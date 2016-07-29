@@ -8,6 +8,8 @@
 
 
 
-
-
 [官方教程](https://docs.mongodb.com/getting-started/node/client/)
+
+[mongo自启动](http://www.cnblogs.com/hamy/p/3448051.html)
+
+[ubuntu 配置mongo](http://blog.fens.me/linux-mongodb-install/)

@@ -1,11 +1,17 @@
 <%- include header %>
 这是<%= message %>
-    <form action="login" method="post">
+    <form action="reg" method="post">
         <label for="username">账号</label>
         <input type="text" id="username" name="username">
 
         <label for="pwd">密码</label>
         <input type="password" id="pwd" name="pwd">
+
+       <label for="re_pwd">确认密码</label>
+        <input type="password" id="re_pwd" name="re_pwd">
+
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email">
 
         <input type="submit" value="submit">
     </form>

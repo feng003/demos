@@ -1,31 +1,11 @@
-[官方文档](http://www.expressjs.com.cn/)
+> 问题一、Sessions with node.js / Express – TypeError: Cannot set property ‘X’ of undefined
 
-> 问题一：使用生成器安装express的时候  express command not found解决方法
+    app.use(express.cookieParser());
+    app.use(express.session({ secret: "keyboard cat" }));
 
-    npm install express-generator -g
+    app.use(router);
 
-    express -h
-
-    express myapp
-
-    cd myapp  && npm install
-
-> 问题二 启动应用
-
-    进入项目目录（microblog）
-
-    mac或者linux
-        DEBUG=microblog(目录名称) npm start
-    win
-         set DEBUG=microblog & npm start
-
-> 问题三 换模板引擎
-
-    npm install ejs --save
+It is important that app.use(app.router) is BELOW in your configuration function.
 
 
-> Error: Can't set headers after they are sent.怎么解决？
-
-    重复发送 header请求
-
-[参考文档](http://stackoverflow.com/questions/7042340/node-js-error-cant-set-headers-after-they-are-sent)
+[参考文档](https://tanyanam.com/2012/06/28/sessions-with-node-js-express-typeerror-cannot-set-property-x-of-undefined/)

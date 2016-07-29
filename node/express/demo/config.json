@@ -1,0 +1,13 @@
+{
+  "app":8880,
+  "session":{
+    "secret":"keyboard",
+    "cookie":{"maxAge": 60000}
+  },
+  "mongo":{
+    "url":"mongodb://localhost/user",
+    "ttl": 3600000,
+    "autoRemove":"native",
+    "autoRemoveInterval":10
+  }
+}

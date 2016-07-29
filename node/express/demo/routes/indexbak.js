@@ -2,34 +2,42 @@
  * Created by zhang on 2016/7/14.
  */
     var express = require('express');
+    var MongoClient  = require('mongodb').MongoClient;
+    var assert   = require('assert');
+    var ObjectId = require('mongodb').ObjectID;
     var router   = express.Router();
+    var blogEngine = require('./blog');
+    var url = 'mongodb://localhost:27017/test';
+
     var md5 = require('../lib/md5');
     var User = require('../models/user.js');
 
-    function checkLogin(req,res,next){
-        if(!req.session.user){
-            req.flash('info',"未登陆");
-            return res.redirect('/login');
-        }
-        next();
+function checkLogin(req,res,next){
+    if(!req.session.user){
+        req.flash('info',"未登陆");
+        return res.redirect('/login');
     }
+    next();
+}
 
-    function checkNotLogin(req,res,next){
-        if(req.session.user){
-            req.flash('info',"已登陆");
-            return res.redirect('back');
-        }
-        next();
+function checkNotLogin(req,res,next){
+    if(req.session.user){
+        req.flash('info',"已登陆");
+        return res.redirect('back');
     }
+    next();
+}
 
     //Express框架等于在http模块之上，加了一个中间层
     router.get('/',function(req,res){
-        console.log(req.session);
+        console.log(req.flash('info'));
+        console.log(req.session.user);
         res.render("index",{
             message:"hello home",
             title:"home",
+            entries:blogEngine.getBlogEntries(),
             user: req.session.user,
-            flash:"Home"});
+            flash: req.flash('info').toString()});
     });
 
     router.get('/login',checkNotLogin);
@@ -38,7 +46,7 @@
             message:"hello login",
             title:"login",
             user: req.session.user,
-            flash:"登陆"});
+            flash: req.flash('info').toString()});
     });
 
     router.post('/login',checkNotLogin);
@@ -66,11 +74,7 @@
 
     router.get('/reg',checkNotLogin);
     router.get('/reg',function(req,res){
-        res.render('reg',{
-            message:"hello reg",
-            title:"reg",
-            user:req.session.user,
-            flash:"注册"});
+        res.render('reg',{message:"hello reg",title:"reg",user:req.session.user,flash:req.flash('info').toString()});
     });
 
     router.post('/reg',checkNotLogin);

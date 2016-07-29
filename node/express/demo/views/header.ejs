@@ -13,8 +13,18 @@
 
 <nav>
 <span><a title="主页" href="/">home</a></span>
-<span><a title="登录" href="/login">login</a></span>
-<span><a title="注册" href="/reg">register</a></span>
+
+<% if(user){ %>
+    <span><a title="发表" href="/article/1">login</a></span>
+    <span><a title="登出" href="/logout">register</a></span>
+<% }else{ %>
+    <span><a title="登录" href="/login">login</a></span>
+    <span><a title="注册" href="/reg">register</a></span>
+<% } %>
 </nav>
 
 <article>
+
+<% if (flash && typeof flash == 'string') { %>
+  <div><%= flash %></div>
+<% } %>
