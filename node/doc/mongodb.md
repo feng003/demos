@@ -5,6 +5,15 @@
 
 > node and mongo
 
+> ubuntu 启动 mongo
+
+/usr/bin/mongo
+
+dbPath: /var/lib/mongodb
+
+mongod --dbpath /var/lib/mongodb/
+
+
 
 
 
