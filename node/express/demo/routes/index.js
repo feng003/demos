@@ -5,6 +5,7 @@
     var router   = express.Router();
     var md5 = require('../lib/md5');
     var User = require('../models/user.js');
+    var Article = require('../models/article.js');
 
     function checkLogin(req,res,next){
         if(!req.session.user){
@@ -24,12 +25,12 @@
 
     //Express框架等于在http模块之上，加了一个中间层
     router.get('/',function(req,res){
-        console.log(req.session);
+        console.log( req.session.user);
         res.render("index",{
             message:"hello home",
             title:"home",
             user: req.session.user,
-            flash:"Home"});
+            flash:req.flash('info').toString()});
     });
 
     router.get('/login',checkNotLogin);
@@ -111,19 +112,33 @@
         });
     });
 
-    router.get("/article/:id",function(req,res){
-        console.log(req.params.id);
-        if(req.params.id){
-            var entry = blogEngine.getBlogEntry(req.params.id);
-        }else{
-            var entry =  {"id":0, "title":"第0篇", "body":"默认", "published":"6/4/2013"};
-        }
-        res.render("article",{title:entry.title,blog:entry});
+    router.get('/logout',checkLogin);
+    router.get('/logout',function(req,res){
+        req.session.user = null;
+        req.flash('info','退出登陆');
+        res.redirect('/');
     });
 
-    router.post('/article', function (req, res) {});
+    router.get('/logout',checkLogin);
+    router.get("/article",function(req,res){
+        console.log(req.session.user.username);
+        res.render("article",{
+            message:"文章首页",
+            title:"文章首页",
+            user:req.session.user,
+            flash:"文章首页"});
+    });
 
-    router.get('/logout', function (req, res) {});
+    router.post('/logout',checkLogin);
+    router.post('/article', function (req, res) {
+        Article.save(req.session.user,req.body,function(err){
+            if(err){
+                return next(err);
+            }
+            req.flash('info',"发布成功");
+            res.redirect('/');
+        })
+    });
 
     router.get("/about",function(req,res){
         var body = "hello node";

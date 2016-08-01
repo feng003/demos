@@ -1,22 +1,41 @@
-var express = require('express');// 首先引入 express-session 这个模块
-var session = require('express-session');
-var app = express();
-app.listen(5000);// 按照上面的解释，设置 session 的可选参数
-app.use(session({
-  secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
-  cookie: { maxAge: 60 * 1000 }
-}));
+/**
+ * Created by zhang on 2016/7/14.
+ */
+var path    = require('path');
+var express = require('express');
+var favicon = require('serve-favicon');
+var logger  = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser   = require('body-parser');
+var session    = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+var flash      = require('connect-flash');
 
-app.get('/', function (req, res) {  // 检查 session 中的 isVisit 字段
-    // 如果存在则增加一次，否则为 session 设置 isVisit 字段，并初始化为 1。
-    if(req.session.isVisit) {
-        console.log(req.session);
-        req.session.isVisit++;
-        res.send('<p>第 ' + req.session.isVisit + '次来此页面</p>');
-        res.end();
-    } else {
-        req.session.isVisit = 1;
-        res.send("欢迎第一次来这里");
-        res.end();
-    }
+var routes = require('./routes/index');
+//var api    = require('./routes/api');
+
+var config = require('./config');
+var app = express();
+
+//app.get("/api",api.index);
+
+app.set('port',process.env.PORT || 8880);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(logger('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+//config.session.store = new MongoStore(config.mongo);
+//console.log(config.session);
+//app.use(session(config.session));
+app.use(flash());
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}));
+app.use(express.static(__dirname + "/public"));
+
+app.use('/', routes);
+//app.use('/user', user);
+
+app.listen(process.env.PORT || config.app, function () {
+    console.log('blog listening on port ' + (process.env.PORT || config.app));
 });
