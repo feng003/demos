@@ -39,3 +39,9 @@ exports.get = function(name,cb){
             });
     });
 };
+
+exports.drain = function(){
+    mongoPool.drain(function(){
+        mongoPool.destroyAllNow();
+    })
+};

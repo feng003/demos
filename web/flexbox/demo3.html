@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo3 - flex items</title>
+    <style>
+        html{
+            width: 800px;
+            height: 100%;
+            margin: 0;
+            /*direction: rtl;*/
+        }
+        .container{
+            display: -webkit-flex;
+            display: flex;
+            /*-webkit-flex-direction: row;*/
+            /*flex-direction: row;*/
+            -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+            /*-webkit-justify-content: space-between;*/
+            /*justify-content: space-between;*/
+            /*-webkit-align-content: center;*/
+            /*align-content: center;*/
+        }
+        .c-div{
+            background-color: #00B7FF;
+            width: 300px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="c-div">
+        flexbox
+    </div>
+    <div class="c-div">
+        BEM Block_Element--Modifier
+    </div>
+    <div class="c-div">
+        浮动布局
+        display -- flex / inline-flex, (This is the only property you need to set on the parent container and all its immediate children will become automatically flex items)
+        rtl -- right to left ,
+        flex-direction -- row / column,
+        flex-wrap -- wrap / nowrap / wrap-reverse
+    </div>
+    <div class="c-div">
+        justify-content -- center / space-between / flex-start / flex-end
+        align-content   -- center / flex-start / flex-end
+    </div>
+    <div class="c-div">
+        align-items stretch / flex-start / flex-end / center / baseline
+        flex items --  flex-grow / flex-shrink / align-self
+    </div>
+</div>
+</body>
+</html>

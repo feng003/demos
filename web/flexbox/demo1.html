@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo1 - flex-direction</title>
+    <style>
+        html{
+            width: 600px;
+            height: 100%;
+            margin: 0;
+            /*direction: rtl;*/
+        }
+        .container{
+            display: -webkit-flex;
+            display: flex;
+            /*-webkit-flex-direction: row;*/
+            /*flex-direction: row;*/
+            -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+        }
+        .c-div{
+            background-color: #00B7FF;
+            width: 300px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="c-div">
+        flexbox
+    </div>
+    <div class="c-div">
+        BEM Block_Element--Modifier
+    </div>
+    <div class="c-div">
+        浮动布局,rtl -- right to left ,flex-direction -- row / column,flex-wrap -- wrap / nowrap / wrap-reverse
+    </div>
+    <div class="c-div">
+        justify-content
+    </div>
+</div>
+</body>
+</html>

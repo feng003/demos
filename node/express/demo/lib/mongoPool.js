@@ -17,7 +17,7 @@ var mongoPool = poolModule.Pool({
     destroy  : function(client) { client.end(); },
     max      : 5,
     min      : 1,
-    idleTimeoutMillis : 30,
+    idleTimeoutMillis : 30000,
     log : false
 });
 

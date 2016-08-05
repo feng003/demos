@@ -1,15 +1,15 @@
 /**
  * Created by zhang on 2016/7/14.
  */
-var path    = require('path');
-var express = require('express');
-var favicon = require('serve-favicon');
-var logger  = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session    = require('express-session');
-var MongoStore = require('connect-mongo')(session);
-var flash      = require('connect-flash');
+var path     = require('path')
+    ,express = require('express')
+    ,favicon = require('serve-favicon')
+    ,logger  = require('morgan')
+    ,cookieParser = require('cookie-parser')
+    ,bodyParser   = require('body-parser')
+    ,session    = require('express-session')
+    ,MongoStore = require('connect-mongo')(session)
+    ,flash      = require('connect-flash');
 
 var routes = require('./routes/index');
 //var api    = require('./routes/api');

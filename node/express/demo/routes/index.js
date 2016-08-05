@@ -26,11 +26,12 @@
     //Express框架等于在http模块之上，加了一个中间层
     router.get('/',function(req,res){
         console.log( req.session.user);
+        var username = req.session.user?req.session.user.username:'';
         res.render("index",{
             message:"hello home",
             title:"home",
             user: req.session.user,
-            flash:req.flash('info').toString()});
+            flash:username + req.flash('info').toString()});
     });
 
     router.get('/login',checkNotLogin);
