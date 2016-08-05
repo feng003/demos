@@ -5,3 +5,7 @@
 2、学习react之前，要先了解node npm，所以还是学下node koa
 
 3、之后学习react.js，更多是应用react，包括react  native的api来实现一个记事本的
+
+[react-howto](https://github.com/petehunt/react-howto.git)
+
+[react-makes-you-sad](https://github.com/wyvernnot/react-makes-you-sad.git)
