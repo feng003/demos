@@ -1,16 +1,21 @@
 <%- include header %>
 这是<%= message %>
 <div>
-   <h2><%= title %></h2>
+   <a href="/post"> <h2><%= title %></h2> </a>
 </div>
 <div>
-    <form action="/article" method="post">
-        <label for="title">文章标题</label>
-        <input type="text" id="title" name="title">
-
-        <label for="content">文章内容</label>
-        <textarea name="content" id="content" cols="30" rows="10"></textarea>
-         <input type="submit" value="submit">
-    </form>
+    <% posts.forEach(function(post){ %>
+        <h2>
+            <a href="/p/<%= post._id %>">
+                <%= post.title %>
+            </a>
+        </h2>
+        <p>
+            日期: <%= post.time %>
+        </p>
+        <p>
+            <%= post.content %>
+        </p>
+    <% })%>
 </div>
 <%- include footer %>

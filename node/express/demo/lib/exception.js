@@ -4,7 +4,6 @@
 
 var util = require('util');
 
-
 var Codes = {
     RequestError: 'RequestError',
     NotFound: 'NotFound',

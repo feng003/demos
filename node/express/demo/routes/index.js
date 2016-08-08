@@ -120,18 +120,38 @@
         res.redirect('/');
     });
 
-    router.get('/logout',checkLogin);
+    router.get('/article',checkLogin);
     router.get("/article",function(req,res){
-        console.log(req.session.user.username);
-        res.render("article",{
-            message:"文章首页",
-            title:"文章首页",
-            user:req.session.user,
-            flash:"文章首页"});
+        var page = req.query.p ? parseInt(req.query.p):1;
+        Article.getTen(null,page,function(err,posts,total){
+            if(err){
+                posts = [];
+            }
+            res.render("article",{
+                message:"文章首页",
+                title:"发布文章",
+                posts:posts,
+                isFirstPage:(page-1) == 0,
+                isLastPage:((page-1)*10 + posts.length) == total,
+                user:req.session.user,
+                success:req.flash('success').toString(),
+                error:req.flash('error').toString(),
+                flash:"发布文章"
+            });
+        });
     });
 
-    router.post('/logout',checkLogin);
-    router.post('/article', function (req, res) {
+    router.get('/post',checkLogin);
+    router.get("/post",function(req,res){
+        res.render("post",{
+            message:"发布文章",
+            title:"发布文章",
+            user:req.session.user,
+            flash:"发布文章"});
+    });
+
+    router.post('/post',checkLogin);
+    router.post('/post', function (req, res) {
         Article.save(req.session.user,req.body,function(err){
             if(err){
                 return next(err);
@@ -139,6 +159,23 @@
             req.flash('info',"发布成功");
             res.redirect('/');
         })
+    });
+
+    router.get('p',checkLogin);
+    router.get('/p/:id',function(req,res,next){
+        var id = req.params.id;
+        console.log(id);
+        Article.getId(id,function(err,post){
+            if(err){
+                return next(err);
+            }
+            res.render('details',{
+                title:post.title,
+                post:post,
+                user:req.session.user,
+                flash:req.flash('info').toString()
+            });
+        });
     });
 
     router.get("/about",function(req,res){
