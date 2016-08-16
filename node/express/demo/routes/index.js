@@ -161,11 +161,10 @@
         })
     });
 
-    router.get('p',checkLogin);
     router.get('/p/:id',function(req,res,next){
         var id = req.params.id;
-        console.log(id);
-        Article.getId(id,function(err,post){
+        Article.getOne(id,function(err,post){
+            console.log(post);
             if(err){
                 return next(err);
             }
@@ -176,6 +175,27 @@
                 flash:req.flash('info').toString()
             });
         });
+    });
+
+    router.post('/p/:id',checkLogin);
+    router.post('/p/:id',function(req,res,next){
+        var body = req.body;
+        var id = req.params.id;
+        var newComment = {
+            name:body.name,
+            email:body.email,
+            website:body.website,
+            time:Date.now(),
+            comtent:body.content
+        };
+
+        Article.postOne(id,newComment,function(err){
+            if(err){
+                return next(err);
+            }
+            req.flash('info','留言成功');
+            res.redirect('back');
+        })
     });
 
     router.get("/about",function(req,res){

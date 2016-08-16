@@ -1,16 +1,28 @@
 <%- include header %>
+<p>
+  <% if (user) { %>
+    <% if (user.name == post.name) { %>
+      <span><a class="edit" href="/edit/<%= post._id %>">编辑</a></span>
+      <span><a class="edit" href="/delete/<%= post._id %>">删除</a></span>
+    <% } else { %>
+      <span><a class="edit" href="/reprint/<%= post._id %>">转载</a></span>
+    <% } %>
+  <% } %>
+</p>
+
 <div>
     <a href="/post"> <h2><%= title %></h2> </a>
 </div>
 <div>
     <h2>
-        <%= post.title %>
+        Title:<%= post.title %>
     </h2>
     <p>
         日期: <%= post.time %>
     </p>
     <p>
-        <%= post.content %>
+       内容: <%= post.content %>
     </p>
 </div>
+<%- include comment %>
 <%- include footer %>
