@@ -5,16 +5,17 @@
 var HelloWorld = React.createClass({
     render:function()
     {
+        console.log(this.props.date);
         return (
             <p>
-            Hello <input type="text" placeholder='Your name' />
-        It is {this.props.date.toTimeString()}
+            Hello  <input type="text" placeholder='Your name' />
+        It is {this.props.date.toLocaleDateString()}
         </p>
         );
     }
 });
 setInterval(function(){
     ReactDOM.render(
-    <HelloWorld date={new Date()} />,document.getElementById('example')
+    <HelloWorld date={new Date(2018,12,20)} />,document.getElementById('example')
     );
-},5000)
+},2000)
