@@ -1,5 +1,6 @@
 /.idea
-/introduce/node_modules
-/node/express/microblog/node_modules
-/node/express/demo/node_modules
-/node/myapp/node_modules
+/nodeRuMen/node_modules
+/nodeRuMen/tmp
+/project/express/microblog/node_modules
+/project/express/demo/node_modules
+/project/myapp/node_modules

@@ -7,10 +7,10 @@ module.exports = {
     //    filename: "./react/src/simple/bundle.js"
     //},
     entry:{
-        simple:["./react/src/simple.js","./react/src/todo.js"]
+        simple:["./project/simple.js","./project/todo.js"]
     },
     output: {
-        path: "./react/src",
+        path: "./dist/js/",
         filename: "bundle.js"
     },
     //output: {
