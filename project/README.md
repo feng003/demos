@@ -62,6 +62,8 @@
             
 [node event](http://www.runoob.com/nodejs/nodejs-event.html)
 
+[node EventEmitter](http://www.alloyteam.com/2015/08/eventemitter/?utm_source=tuicool&utm_medium=referral)
+
 [node stream](https://github.com/substack/stream-handbook#pipe)
              
              
