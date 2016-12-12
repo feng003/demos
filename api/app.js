@@ -7,7 +7,10 @@
 const h = require('./mHello');
 const fs = require('fs');
 const events = require('events');
-console.log(events);
+const http = require('http');
+const crypto = require('crypto');
+const hash = crypto.createHash('md5');
+console.log(hash);
 
 let s = "node";
 h(s);
@@ -44,7 +47,8 @@ fs.stat(fileName,function(err,stat){
 });
 
 var data = JSON.stringify(http,censor(http));
-fs.writeFile('http.txt',data,function(err){
+console.log(http.STATUS_CODES);
+fs.writeFile('./http.txt',data,function(err){
     if(err){
         console.log(err);
     }else{

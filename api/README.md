@@ -66,14 +66,6 @@
 
 [node stream](https://github.com/substack/stream-handbook#pipe)
 
-[api](./api)
-
-[node入门](./introduce)
-
-[koa](./koa)
-
-[nvm](./nvm)
-
 [ubuntu install mongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
 
 [express-session](http://www.cnblogs.com/chenchenluo/p/4197181.html)
