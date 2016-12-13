@@ -3,12 +3,9 @@
  */
 
 var fn_index = async(ctx,next)=>{
-    ctx.response.body = `<h1>hello index</h1>
-        <form action="/signin" method="post">
-            <p>Name: <input type="text" name="name" value="koa"></p>
-            <p>Pwd: <input type="text" name="pwd" value="123456"></p>
-            <p> <input type="submit" value="submit"> </p>
-        </form>`;
+    ctx.render('index.html',{
+        title:'welcome'
+    });
 };
 
 var fn_signin = async(ctx,next)=>{

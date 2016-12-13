@@ -12,40 +12,31 @@ const bodyParser = require('koa-bodyparser');
 const controller = require('./controller');
 //console.log(controller());
 
-const nunjucks = require('nunjucks');
+const templating = require('./templating');
 
-function createEnv(path,opts)
-{
-    var autoescape = opts.autoescape && true,
-        noCache = opts.noCache || false,
-        watch = opts.watch || false,
-        throwOnUndefined = opts.throwOnUndefined || false,
-        env = new nunjucks.Environment(
-            new nunjucks.FileSystemLoader('views',{noCache:noCache,watch:watch,}),
-            {autoescape:autoescape,throwOnUndefined:throwOnUndefined});
-    if(opts.filters)
-    {
-        for(var f in opts.filters){
-            env.addFilter(f,opts.filters[f]);
-        }
-    }
-    return env;
-}
+const cryptoFun = require('./cryptoFun');
+console.log(cryptoFun.aesEncrypto('123','456'));
+console.log(cryptoFun.aesDecrypto('bd7047c784edd9e8f667da0de76ab375','456'));
 
-var env = createEnv('views',{
-    watch:true,
-    filters:{
-    hex:function(n){
-            return '0x' + n.toString(16);
-        }
-    }
+//middleware
+app.use(async (ctx, next) => {
+    console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
+    var
+        start = new Date().getTime(),
+        execTime;
+    await next();
+    execTime = new Date().getTime() - start;
+    ctx.response.set('X-Response-Time', `${execTime}ms`);
 });
-
-//var s = env.render('hello.html', { name: '小明' });
-//console.log(s);
 
 //注意顺序问题
 app.use(bodyParser());
+
+const isProduct = process.env.NODE_EV === 'production';
+app.use(templating('views',{
+    noCache:!isProduct,
+    watch:!isProduct
+}));
 
 app.use(controller());
 
