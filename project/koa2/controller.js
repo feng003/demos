@@ -2,7 +2,6 @@
  * Created by zhang on 2016/12/13.
  */
 "use strict";
-
 const fs = require('fs');
 
 function addMapping(router,mapping)
@@ -36,6 +35,7 @@ function addControllers(router)
     }
 }
 
+//一个模块可以通过module.exports或exports将函数、变量等导出，以使其它JavaScript脚本通过require()函数引入并使用。
 module.exports = function(dir){
 
     let controllers_dir = dir || 'controllers',
