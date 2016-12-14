@@ -28,7 +28,6 @@
     response.sendFile() 发送文件
     response.render()   渲染网页模板
     
-    
 > require('url');
 
     'http://user:pass@host.com:8080/p/a/t/h?query=string#hash'
@@ -42,7 +41,6 @@
     path:     pathname 和 search 连在一起。 '/p/a/t/h?query=string'
     query:    查询字符串中的参数部分（问号后面部分字符串），或者使用 querystring.parse() 解析后返回的对象。
     hash:     URL 的 “#” 后面部分（包括 # 符号）
-
 
 > url.parse(urlStr, [parseQueryString], [slashesDenoteHost])  输入 URL 字符串，返回一个对象。
 
