@@ -10,13 +10,10 @@ const app = new Koa();
 const bodyParser = require('koa-bodyparser');
 
 const controller = require('./controller');
-//console.log(controller());
 
 const templating = require('./templating');
-
+//加密函数
 const cryptoFun = require('./cryptoFun');
-console.log(cryptoFun.aesEncrypto('123','456'));
-console.log(cryptoFun.aesDecrypto('bd7047c784edd9e8f667da0de76ab375','456'));
 
 const model = require('./model');
 
@@ -39,13 +36,6 @@ let
         birth: '2007-07-07',
     });
     console.log('created: ' + JSON.stringify(cat));
-    var dog = await Pet.create({
-        ownerId: user.id,
-        name: 'Odie',
-        gender: false,
-        birth: '2008-08-08',
-    });
-    console.log('created: ' + JSON.stringify(dog));
 })();
 
 //middleware
