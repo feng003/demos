@@ -6,10 +6,10 @@ var fs = require("fs");
 
 http.createServer(function(req,res){
     //fs.readFile('index.html',function readData(err,data){
-    //    res.writeHead(200,{"Content-Type":"text/plain"});
-    //    res.end(data);
+        res.writeHead(200,{"Content-Type":"text/plain"});
+        res.end("hello world");
     //})
-    console.log(req.header);
-    fs.createReadStream(`${__dirname}/index.html`).pipe(res);
+    //console.log(res);
+    //fs.createReadStream(`${__dirname}/index.html`).pipe(res);
 }).listen(8080);
 console.log('Server running');
