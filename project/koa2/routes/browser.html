@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="output"></div>
+<script>
+    let ws = new WebSocket('ws://localhost:3000/test');
+    // 打开WebSocket连接后立刻发送一条消息:
+    ws.onopen = function(){
+        console.log(`[CLIENT] onopen()`);
+        doSend('hello ws');
+    };
+    ws.onmessage = function(message){
+        console.log(`[CLIENT] Received: ${message}`);
+    };
+    function doSend(message) {
+        writeToScreen("SENT: " + message);
+        ws.send(message);
+    }
+    function writeToScreen(message) {
+        output  = document.getElementById("output");
+        var pre = document.createElement("p");
+        pre.style.wordWrap = "break-word";
+        pre.innerHTML = message;
+        output.appendChild(pre);
+    }
+</script>
+</body>
+</html>
