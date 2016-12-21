@@ -1,3 +1,37 @@
+> 构建web应用
+
+1.1 请求方法
+
+    function(request,response){
+        console.log(request.method);
+    }
+    
+1.2 路径解析 
+    
+    var url = require('url');
+    var pathname = url.parse(req.url).pathname;
+
+    GET /path?foo=bar HTTP/1.1
+    request.url
+    http://user:pass@host.com:8080/p/a/t/h?query=string#hash
+    
+    /controller/action/a/b/c
+    
+1.3 查询字符串  
+
+    var querystring = require('querystring');
+    var query = querystring.parse(url.parse(req.url).query);
+    
+1.4 cookie
+
+    
+
+
+    
+
+    
+
+
 > introduce api
 
 5. [fs](http://nodeapi.ucdok.com/api/fs.html) 与文件系统交互。
