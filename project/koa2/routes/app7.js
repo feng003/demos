@@ -6,10 +6,6 @@ const Koa = require('koa');
 
 const app = new Koa();
 
-const webSocket = require('ws');
-
-const fs = require('fs');
-
 //koa-bodyparser  解析原始request请求
 const bodyParser = require('koa-bodyparser');
 
@@ -76,29 +72,5 @@ app.use(rest.restify());
 // add controllers:
 app.use(controller());
 
-let server = app.listen(3300);
-
-const webSocketServer = webSocket.Server;
-
-const wss = new webSocketServer({
-    server: server
-});
-
-wss.on('connection',function(ws){
-    ws.on('message',function(message){
-        //console.log(`[SERVER] Received: ${message}`);
-        ws.send(`${message}`,(err)=>{
-            if(err){
-                console.log(`[SERVER] error: ${err}`);
-            }
-            var messFile = __dirname + "/txt.txt";
-            //追加写入操作
-            fs.appendFile(messFile,message,(err)=>{
-                if(err) throw err;
-                console.log('saved');
-            })
-        })
-    })
-});
-
+app.listen(3300);
 console.log('app started at port 3300');

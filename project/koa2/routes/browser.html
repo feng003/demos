@@ -6,12 +6,12 @@
 </head>
 <body>
 <div id="output"></div>
-<script>
-    let ws = new WebSocket('ws://localhost:3000/test');
+<script type="text/javascript">
+    let ws = new WebSocket('ws://localhost:3300/');
     // 打开WebSocket连接后立刻发送一条消息:
     ws.onopen = function(){
         console.log(`[CLIENT] onopen()`);
-        doSend('hello ws');
+        doSend('hello ws onopen');
     };
     ws.onmessage = function(message){
         console.log(`[CLIENT] Received: ${message}`);
