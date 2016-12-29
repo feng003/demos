@@ -2,7 +2,7 @@
  * Created by zhang on 2016/12/20.
  */
 
-const products = require('../products');
+const products = require('../config/products');
 
 const APIError = require('../rest').APIError;
 

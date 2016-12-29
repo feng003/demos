@@ -28,6 +28,7 @@
             ws.onopen = function(){
                 ws.send(msg);
             };
+
             ws.onmessage = function(e){
 //                console.log(e);
                 var danmaku = JSON.parse(e.data);

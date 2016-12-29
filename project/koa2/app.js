@@ -13,6 +13,8 @@ const fs = require('fs');
 //koa-bodyparser  解析原始request请求
 const bodyParser = require('koa-bodyparser');
 
+const model = require('./model');
+
 const controller = require('./controller');
 
 const templating = require('./templating');
@@ -20,15 +22,13 @@ const templating = require('./templating');
 const rest = require('./rest');
 
 //加密函数
-const cryptoFun = require('./cryptoFun');
-
-const model = require('./model');
+const cryptoFun = require('./config/cryptoFun');
 
 let
-    Pet  = model.Pet,
+    UserAuth  = model.UserAuth,
     User = model.User;
 
-(async () => {
+//(async () => {
     //var user = await User.create({
     //    name: 'John',
     //    gender: false,
@@ -43,7 +43,7 @@ let
     //    birth: '2007-07-07',
     //});
     //console.log('created: ' + JSON.stringify(cat));
-})();
+//})();
 
 //middleware
 app.use(async (ctx, next) => {

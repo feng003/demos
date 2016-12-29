@@ -4,8 +4,7 @@
 "use strict";
 // scan all models defined in models:
 const fs = require('fs');
-const db = require('./db');
-
+const db = require('./config/db');
 let files = fs.readdirSync(__dirname + '/models');
 
 let js_files = files.filter((f)=>{
@@ -13,7 +12,6 @@ let js_files = files.filter((f)=>{
 }, files);
 
 module.exports = {};
-
 for (let f of js_files) {
     //console.log(`import model from file ${f}...`);
     let name = f.substring(0, f.length - 3);

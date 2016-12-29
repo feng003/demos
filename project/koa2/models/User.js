@@ -2,7 +2,7 @@
  * Created by zhang on 2016/12/14.
  */
 
-const db = require('../db');
+const db = require('../config/db');
 
 module.exports = db.defineModel('users', {
     email: {
