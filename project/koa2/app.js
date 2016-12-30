@@ -26,7 +26,8 @@ const cryptoFun = require('./config/cryptoFun');
 
 let
     UserAuth  = model.UserAuth,
-    User = model.User;
+    User      = model.User,
+    Message   = model.Message;
 
 //(async () => {
     //var user = await User.create({

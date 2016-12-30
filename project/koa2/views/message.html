@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block main %}
+<h1>hello {{title}}</h1>
+<div class="grid-demo">
+    <div class="ant-row demo-row">
+        <div class="ant-col-12 demo-col demo-col-1">
+            <form action="/addMessage" method="post" class="ant-form login-form">
+                <p>username: <input type="text" name="username" class="ant-input ant-input-lg"></p>
+                <p>title: <input type="text" name="title" class="ant-input ant-input-lg"></p>
+                <p>Email: <input type="text" name="email" class="ant-input ant-input-lg"></p>
+                <p>context: <textarea name="context" id="context" cols="30" rows="10" class="ant-input ant-input-lg"></textarea></p>
+                <div class="ant-form-item-control has-success">
+                    <p> <input type="submit" value="submit" class="ant-btn ant-btn-primary ant-btn-lg login-form-button"> </p>
+                </div>
+            </form>
+        </div>
+        <div class="ant-col-12 demo-col demo-col-1">
+            <ul>
+                {% for f in msg %}
+                <li>username: {{f.username}}</li>
+                <li>title:{{f.title}}</li>
+                <li>Email:{{f.email}}</li>
+                <li>context:{{f.context}}</li>
+                <li>操作： <a href="/deleteMessage/{{f.id}}">删除</a> <a href="/editMessage/{{f.id}}">编辑</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
