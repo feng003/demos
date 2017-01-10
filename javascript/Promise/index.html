@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise MDN</a>
+<script src="ajax.js"></script>
+<script>
+    // B-> Here you define its functions and its payload
+    var mdnAPI = './index.json';
+    var payload = {
+        'topic' : 'js',
+        'q'     : 'Promise'
+    };
+
+    var callback = {
+        success : function(data){
+            console.log(1, 'success', JSON.parse(data));
+        },
+        error : function(data){
+            if(data){
+                var result = JSON.parse(data);
+            }else{
+                var result = data;
+            }
+            console.log(2, 'error', result);
+        }
+    };
+    // End B
+
+    // Executes the method call
+    $http(mdnAPI)
+            .get(payload)
+            .then(callback.success)
+            .catch(callback.error);
+
+    // Executes the method call but an alternative way (1) to handle Promise Reject case
+    $http(mdnAPI)
+            .get(payload)
+            .then(callback.success, callback.error);
+
+    // Executes the method call but an alternative way (2) to handle Promise Reject case
+    $http(mdnAPI)
+            .get(payload)
+            .then(callback.success)
+            .then(undefined, callback.error);
+</script>
+</body>
+</html>
