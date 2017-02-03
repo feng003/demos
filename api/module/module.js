@@ -1,9 +1,8 @@
 var name;
 
-exports.setName = function(theName){
-    name = theName;
-};
+const PI = Math.PI;
 
-exports.sayHello = function(){
-    console.log('Hello ' + name);
-};
+exports.setName  = (theName) =>  name = theName;
+exports.sayHello = () =>  console.log('Hello ' + name);
+exports.area     = (r) => PI * r * r;
+exports.circumference = (r) => 2 * PI * r;
