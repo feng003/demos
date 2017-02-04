@@ -9,4 +9,5 @@ import App from './src/App';
 function tick(){
     render(<App />,document.querySelector('#app'));
 }
-setInterval(tick,1000);
+tick();
+//setInterval(tick,1000);

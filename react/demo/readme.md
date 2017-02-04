@@ -4,6 +4,8 @@
 
 > webpack 学习
 
+[webpack](https://webpack.js.org/guides/get-started/)
+
 [webpack官网](http://webpack.github.io/docs/)
 
 [webpack入门](http://www.jianshu.com/p/42e11515c10f)
