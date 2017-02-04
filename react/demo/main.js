@@ -6,4 +6,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import App from './src/App';
 
-render(<App />,document.querySelector('#app'));
+function tick(){
+    render(<App />,document.querySelector('#app'));
+}
+setInterval(tick,1000);

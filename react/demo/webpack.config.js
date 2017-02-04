@@ -14,7 +14,8 @@ module.exports = {
     },
     plugins:[
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.BannerPlugin('This file is created by feng003')
     ],
     module:{
         loaders:[
