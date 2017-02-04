@@ -1,0 +1,15 @@
+{
+  "name": "01-react",
+  "version": "1.0.0",
+  "description": "React",
+  "scripts": {
+    "start": "webpack-dev-server --progress",
+    "build": "NODE_ENV=production webpack --config ./webpack.production.config.js --progress"
+  },
+  "devDependencies": {
+
+  },
+  "dependencies": {
+
+  }
+}

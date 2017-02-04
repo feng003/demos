@@ -13,6 +13,10 @@
     "socket.io": "^1.7.1",
     "async":"2.1.4",
     "step":"0.0.6",
-    "flv.js":"1.1.0"
+    "flv.js":"1.1.0",
+    "comment-core-library":"0.9.3",
+    "forever":"0.15.3",
+    "underscore":"1.8.3",
+    "lodash":"4.17.3"
   }
 }
