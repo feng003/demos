@@ -1,5 +1,8 @@
 > 读书笔记
 
+
+[react坑](https://segmentfault.com/a/1190000005698689#articleHeader2)
+
 [node学习](https://www.zhihu.com/question/21567720)
 
 > webpack 学习

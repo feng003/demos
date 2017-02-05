@@ -1,38 +1,51 @@
-/**
- * Created by zhang on 2017/2/3.
- */
-import React from 'react';
-import Counter from './Counter';
-import Messagelist1 from './Messagelist1';
-import Messagelist2 from './Messagelist2';
+import React,{ Component }  from 'react';
 
-function formatName(user){
-    return user.firstName + '' + user.lastName;
-}
+const suffix = "被调用，this指向：";
 
-const user = {
-    firstName:'H',
-    lastName:'L',
-    avatarUrl:"https://facebook.github.io/react/img/logo.svg"
-};
+export default class App extends Component
+{
+    constructor(props){
+        super(props);
+        this.handler = this.handler.bind(this)
+    }
 
-export default function App(){
-    return <div>
-                <img src={user.avatarUrl} alt={user.firstName} />
-                <h3> Hello </h3>
-                <h1> {formatName(user)} </h1>
-                <h3>It is {new Date().toLocaleTimeString()}.</h3>
-                <h2>
-                    state props
-                </h2>
-                <Counter />
-                <h2>
-                    props传递数据
-                </h2>
-                <Messagelist1 />
-                <h2>
-                    context跨级传递数据
-                </h2>
-                <Messagelist2 />
+    componentDidMount(){
+        console.log(`componentDidMount${suffix}`,this);
+    }
+
+    componentWillReceiveProps(){
+        console.log(`componentWillReceiveProps${suffix}`,this);
+    }
+
+    shouldComponentUpdate(){
+        console.log(`shouldComponentUpdate${suffix}`,this);
+        return true;
+    }
+
+    componentDidUpdate(){
+        console.log(`componentDidUpdate${suffix}`,this);
+    }
+
+    componentWillMount(){
+        console.log(`componentWillMount${suffix}`,this);
+    }
+
+    handler(){
+        console.log(`handler${suffix}`,this);
+    }
+
+    render(){
+        console.log(`render${suffix}`,this);
+        this.handler();
+        window.handler = this.handler;
+        window.handler();
+        return (
+            <div>
+                <h1 onClick={this.handler}>hello world</h1>
+                <p>
+                    this
+                </p>
             </div>
+        )
+    }
 }
