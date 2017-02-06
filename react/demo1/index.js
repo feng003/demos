@@ -3,4 +3,4 @@
  */
 
 require('babel-register');
-require('./src/app.js');
+require('./src/server.js');
