@@ -10,7 +10,7 @@ function $http(url){
             var promise = new Promise( function(resolve,reject){
                 var client = new XMLHttpRequest();
                 var uri = url;
-                if(args && (method ==='POST' || method === "POST")){
+                if(args && (method ==='GET' || method === "POST")){
                     uri += "?";
                     var argcount = 0;
                     for(var key in args){
@@ -64,7 +64,5 @@ function $http(url){
 //Promise.resolve(promise);
 //Promise.resolve(thenable);
 
-
 //Promise.reject(reason); 返回一个用reason拒绝的Promise
-
 //Promise.race(iterable); 返回一个 promise
