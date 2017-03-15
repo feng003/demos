@@ -1,34 +1,42 @@
 var querystring = require("querystring");
-var fs          = require("fs");
+var fs          = require('fs');
 var util        = require("util");
 var formidable  = require("formidable");
 var exec        = require('child_process').exec;
 
-var MongoClient = require('mongodb').MongoClient;
+// var MongoClient = require('mongodb').MongoClient;
 var assert   = require('assert');
- var ObjectId = require('mongodb').ObjectID;
-var url      = 'mongodb://localhost:27017/node';
+ // var ObjectId = require('mongodb').ObjectID;
+// var url      = 'mongodb://localhost:27017/node';
+
+/**
+ * ejs框架 封装 页面数据展示
+ * @param response
+ * @param data    数据
+ * @param action  页面
+ */
+function render(response,data,action){
+        action ?action:'index';
+    var ejs = require('ejs');
+        path = __dirname + '/views/'+action+'.ejs',
+        str = fs.readFileSync(path, 'utf8'),
+        ret = ejs.render(str, {
+            data: data,
+            filename: path
+        });
+    response.writeHead(200, {"Content-Type": "text/html"});
+    response.write(ret);
+    response.end();
+}
 
 function index(response,postData)
 {
-    var body = '<html>' +
-        '<head>' +
-        '<meta http-equiv="Content-Type" content="text/html; ' +
-        'charset=UTF-8" />' +
-        '</head>' +
-        '<body>' +
-        '<form action="/doIndex" method="post">' +
-        '<input name="title" type="text" />' +
-        '<input name="passwd" type="password" />' +
-        '<textarea name="text" rows="20" cols="60"></textarea>' +
-        '<input type="submit" value="Submit text" />' +
-        '</form>' +
-        '</body>' +
-        '</html>';
+    var users = [];
 
-    response.writeHead(200, {"Content-Type": "text/html"});
-    response.write(body);
-    response.end();
+    users.push({ name: 'Tobi', age: 2, species: 'ferret' });
+    users.push({ name: 'Loki', age: 2, species: 'ferret' });
+    users.push({ name: 'Jane', age: 6, species: 'ferret' });
+    render(response,users,'index');
 }
 
 function doIndex(response,request){

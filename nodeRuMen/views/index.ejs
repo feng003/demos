@@ -1,0 +1,24 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    </head>
+<body>
+<form action="/doIndex" method="post">
+
+    <h1>Users</h1>
+
+    <% function user(user) { %>
+    <li><strong><%= user.name %></strong> is a <%= user.age %> year old <%= user.species %>.</li>
+    <% } %>
+
+    <ul>
+        <% data.map(user) %>
+    </ul>
+
+    <input name="title" type="text" />
+    <input name="passwd" type="password" />
+    <textarea name="text" rows="20" cols="60"></textarea>
+    <input type="submit" value="Submit text" />
+    </form>
+</body>
+</html>
