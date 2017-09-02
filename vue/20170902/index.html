@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <alert-model></alert-model>
+    <alert-model></alert-model>
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script>
+//    var alertModel = Vue.extend({
+//        template:"<div>{{info}}</div>",
+//        data:function(){
+//            return {
+//                info:"success info",
+//            }
+//        }
+//    })
+//    alertInstance = new alertModel();
+//    console.log(alertInstance);
+//    alertInstance.$mount('#app');
+
+    var alertModel2 = Vue.extend({
+        template:"<div>{{info}}</div>",
+        data:function(){
+            return {
+                info:"error info",
+            }
+        }
+    })
+    Vue.component('alert-model',alertModel2);
+
+    var app = new Vue({
+        el:'#app'
+    })
+</script>
+</body>
+</html>

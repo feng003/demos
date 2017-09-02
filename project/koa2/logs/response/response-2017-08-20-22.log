@@ -1,0 +1,144 @@
+[2017-08-20 22:54:02.964] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /var
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 5
+response status: 404
+response body: 
+undefined
+*************** response log end ***************
+
+[2017-08-20 22:54:03.038] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /var
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 1
+response status: 404
+response body: 
+undefined
+*************** response log end ***************
+
+[2017-08-20 22:54:03.708] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /favicon.ico
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 1
+response status: 404
+response body: 
+undefined
+*************** response log end ***************
+
+[2017-08-20 22:54:06.643] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /bar
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 4
+response status: 404
+response body: 
+undefined
+*************** response log end ***************
+
+[2017-08-20 22:54:06.703] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /bar
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 1
+response status: 404
+response body: 
+undefined
+*************** response log end ***************
+
+[2017-08-20 22:54:07.322] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /favicon.ico
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 1
+response status: 404
+response body: 
+undefined
+*************** response log end ***************
+
+[2017-08-20 22:54:39.471] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /string
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 2
+response status: 200
+response body: 
+"koa2 string"
+*************** response log end ***************
+
+[2017-08-20 22:54:39.533] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /string
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 1
+response status: 200
+response body: 
+"koa2 string"
+*************** response log end ***************
+
+[2017-08-20 22:54:40.158] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /favicon.ico
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 2
+response status: 404
+response body: 
+undefined
+*************** response log end ***************
+
+[2017-08-20 22:54:45.388] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /json
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 2
+response status: 200
+response body: 
+{"title":"koa2 json"}
+*************** response log end ***************
+
+[2017-08-20 22:54:45.455] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /json
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 4
+response status: 200
+response body: 
+{"title":"koa2 json"}
+*************** response log end ***************
+
+[2017-08-20 22:54:46.099] [INFO] resLogger - 
+*************** response log start ***************
+request method: GET
+request originalUrl:  /favicon.ico
+request client ip:  ::ffff:127.0.0.1
+request query:  {}
+response time: 0
+response status: 404
+response body: 
+undefined
+*************** response log end ***************
+
