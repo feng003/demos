@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="alertinfo">
+    <alert-model :msg="alertinfo"></alert-model>
+    <sum num="10"></sum> <!--传递字符串-->
+    <sum :num="10"></sum> <!--传递数值-->
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script>
+
+    Vue.config.debug = true;
+    var alertModel = Vue.extend({
+        props:['msg'],
+        template:"<div>{{msg}}</div>", //子组件
+    });
+    var sum = Vue.extend({
+        props:['num'],
+        template:"<span>{{num+1}}</span>"
+    })
+    Vue.component('alert-model',alertModel);
+    Vue.component('sum',sum);
+
+    var app = new Vue({
+        el:'#app',
+        data:function(){
+            return{
+                alertinfo:'alert',
+            }
+        }
+    })
+</script>
+</body>
+</html>

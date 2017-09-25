@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input v-model="alertinfo">
+    <child :msg="alertinfo">
+        <p slot="header">header</p>
+        <p slot="footer">footer</p>
+    </child> default one-way-down binding
+    <child :msg.sync="alertinfo"></child> explicit two-way binding
+    <child :msg.once="alertinfo"></child> explicit one-way binding
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script>
+//    props  父 向 子
+//    emit   子 向 父
+
+    Vue.config.debug = true;
+    var alertModel = Vue.extend({
+        props:['msg'],
+        template:'<div><input v-model="msg"><slot name="header"></slot><slot>no slot</slot><slot name="footer"></slot></div>', //子组件
+    });
+    Vue.component('child',alertModel);
+
+    var app = new Vue({
+        el:'#app',
+        data:function(){
+            return {
+                alertinfo:'alert',
+            }
+        }
+    })
+</script>
+</body>
+</html>

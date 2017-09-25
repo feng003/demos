@@ -1,0 +1,19 @@
+{
+  "name": "learn_package",
+  "version": "1.0.0",
+  "description": "learn npm package",
+  "main": "index.js",
+  "dependencies": {
+    "has-own-property": "^1.0.0",
+    "missing-deep-keys": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "feng003",
+  "license": "ISC"
+}

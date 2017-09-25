@@ -7,3 +7,5 @@
 /project/koa2/node_modules
 /react/demo/node_modules
 /react/demo/static
+/npm/node_modules
+/npm/package-lock.json

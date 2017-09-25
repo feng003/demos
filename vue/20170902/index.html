@@ -6,8 +6,8 @@
 </head>
 <body>
 <div id="app">
-    <alert-model></alert-model>
-    <alert-model></alert-model>
+    <alert-model msg="success"></alert-model>
+    <alert-model msg="error"></alert-model>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
@@ -24,12 +24,13 @@
 //    alertInstance.$mount('#app');
 
     var alertModel2 = Vue.extend({
-        template:"<div>{{info}}</div>",
-        data:function(){
-            return {
-                info:"error info",
-            }
-        }
+        props:['msg'],
+        template:"<div>{{msg}}</div>", //子组件
+//        data:function(){
+//            return {
+//                info:"error info",
+//            }
+//        }
     })
     Vue.component('alert-model',alertModel2);
 
