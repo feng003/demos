@@ -8,6 +8,14 @@
 
         deepKeys(obj, stack, parent, intermediate)
         difference(array, values)
+        
+3. static-props   defines static object attributes using Object.defineProperties
+        
+        staticProps(obj)(props[, enumerable]).
+        
+4. sorted-object Get a Version of an Object with Sorted Keys
+
+5. stringify-object  Stringify an object/array like JSON.stringify just without all the double-quotes
 
 
 
