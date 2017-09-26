@@ -6,6 +6,7 @@ const hasOwnProperty = require('has-own-property');
 const missingDeepKeys = require('missing-deep-keys');
 const staticProps = require('static-props');
 const sortedObject = require('sorted-object');
+const isEmptyObject = require('is-empty-object');
 
 var obj = {'a':'123'};
 
@@ -48,6 +49,10 @@ var input = { c: 3, b: 2, a: 1 };
 var input = { hello: 3, Hi: 2, HELLO: 1, hi: 4 };
 var output = sortedObject(input);
 console.log(output);
+
+console.log(isEmptyObject([]));
+console.log(isEmptyObject({}));
+console.log(isEmptyObject(input));
 
 
 

@@ -17,6 +17,7 @@
 
 5. stringify-object  Stringify an object/array like JSON.stringify just without all the double-quotes
 
+6. is-empty-object Check if an object is empty
 
 
 [npm](https://github.com/feng003/awesome-micro-npm-packages)
