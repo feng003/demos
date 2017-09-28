@@ -19,6 +19,11 @@
 
 6. is-empty-object Check if an object is empty
 
+7. has-key-deep Determines if an object has a deeply-nested key (Question)
+
+8. has-value Returns true if a value exists, false if empty. Works with deeply nested values using object paths.
+
+9. get-value Use property paths (a.b.c) to get a nested value from an object.
 
 [npm](https://github.com/feng003/awesome-micro-npm-packages)
 
