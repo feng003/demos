@@ -10,6 +10,7 @@ const isEmptyObject = require('is-empty-object');
 const hasKeyDeep = require('has-key-deep');
 const hasValue = require('has-value');
 const getValue = require('get-value');
+const setValue = require('set-value');
 
 var obj = {'a':'123'};
 
@@ -64,4 +65,8 @@ console.log(output);
 // console.log(hasValue({foo: 'bar'}, 'foo'));
 
 console.log(getValue(input,'a','b'));
+
+setValue(input,'arr',"44")
+console.log(input);
+
 
