@@ -1,5 +1,13 @@
 ## npm 模块学习
 
+> array
+
+1. is-sorted A small module to check if an Array is sorted
+
+2. array-first Get the first element or first n elements of an array
+
+3. arr-flatten Recursively flatten an array or arrays
+
 > object
 
 1. has-own-property 判断某个对象是否含有指定的属性
