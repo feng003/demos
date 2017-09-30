@@ -8,6 +8,14 @@
 
 3. arr-flatten Recursively flatten an array or arrays
 
+4. dedupe Remove duplicates from an array
+
+5. array-range Creates a new array with given range
+
+6. arr-diff Returns an array with only the unique values from the first array, by excluding all values from additional arrays using strict equality for comparisons
+
+7. filled-array Returns an array filled with the specified input
+
 > object
 
 1. has-own-property 判断某个对象是否含有指定的属性

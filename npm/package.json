@@ -4,9 +4,13 @@
   "description": "learn npm package",
   "main": "index.js",
   "dependencies": {
+    "arr-diff": "^4.0.0",
     "arr-flatten": "^1.1.0",
     "array-first": "^1.0.2",
     "array-last": "^1.2.0",
+    "array-range": "^1.0.1",
+    "dedupe": "^2.1.0",
+    "filled-array": "^1.1.0",
     "get-value": "^2.0.6",
     "has-key-deep": "^2.2.0",
     "has-own-property": "^1.0.0",
