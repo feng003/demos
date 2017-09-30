@@ -10,6 +10,7 @@ const dedupe  = require('dedupe');
 const range = require('array-range');
 const diff  = require('arr-diff');
 const fill  = require('filled-array');
+const mapArray = require('map-array');
 
 let arr = [3, 1, 2, 2, 5, 1];
 let a = [2,3];
@@ -34,4 +35,6 @@ console.log(Array.apply(null, new Array(5)));
 console.log(diff(arr,a));
 
 console.log(fill('x', 3));
+
+console.log(mapArray(arr,function(key,val){return key+"."+val; }));
 

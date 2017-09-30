@@ -16,6 +16,8 @@
 
 7. filled-array Returns an array filled with the specified input
 
+8. map-array Map object keys and values into an array
+
 > object
 
 1. has-own-property 判断某个对象是否含有指定的属性

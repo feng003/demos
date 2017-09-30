@@ -17,6 +17,7 @@
     "has-value": "^1.0.0",
     "is-empty-object": "^1.1.1",
     "is-sorted": "^1.0.4",
+    "map-array": "^1.2.0",
     "missing-deep-keys": "^1.0.0",
     "set-value": "^2.0.0",
     "sorted-object": "^2.0.1",
