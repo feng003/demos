@@ -18,6 +18,14 @@
 
 8. map-array Map object keys and values into an array
 
+9.in-array Return true if any of passed values exists in array - faster than using indexOf
+
+10. unordered-array-remove Efficiently remove an element from an unordered array without doing a splice.
+
+11. array-swap Swap position of two items in an array
+
+12. mirrarray Creates a keymirror object from an array of valid keys
+
 > object
 
 1. has-own-property 判断某个对象是否含有指定的属性
