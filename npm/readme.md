@@ -26,6 +26,10 @@
 
 12. mirrarray Creates a keymirror object from an array of valid keys
 
+> data && time
+
+1. pretty-ms Convert milliseconds to a human readable string
+
 > object
 
 1. has-own-property 判断某个对象是否含有指定的属性
@@ -52,6 +56,10 @@
 9. get-value Use property paths (a.b.c) to get a nested value from an object
 
 10. set-value Create nested values and any intermediaries using dot notation ('a.b.c') paths
+
+> function
+
+
 
 
 
