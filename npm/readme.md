@@ -30,6 +30,12 @@
 
 1. pretty-ms Convert milliseconds to a human readable string
 
+2. hirestime A wrapper around the built-in high resolution timer which simplifies the calculation of timestamps
+
+3. periods Defined time-periods constants for Javascript, in milliseconds
+
+4. fecha Javascript Date formatting and parsing
+
 > object
 
 1. has-own-property 判断某个对象是否含有指定的属性
