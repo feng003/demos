@@ -6,6 +6,8 @@ const prettyMs = require('pretty-ms');
 const hirestime = require('hirestime');
 const periods = require('periods'); //TODO
 const fecha = require('fecha');
+const timeRef = require('akamai-time-reference');
+const timeago = require('timeago.js');
 
 const getElapsed = hirestime();
 
@@ -43,4 +45,19 @@ fecha.masks.myMask = 'HH:mm:ss YY/MM/DD';
 var time = fecha.format(new Date(2014, 5, 6, 14, 10, 45), 'myMask');
 var date = fecha.parse('February 3rd, 2014', 'MMMM Do, YYYY');
 console.log(date);
+console.log(time);
+
+timeRef.now().then(function(now) {
+    console.log(now);
+});
+
+// console.log(timeRef.now());
+// console.log(timeRef.now());
+// console.log(timeRef.now());
+
+
+const timeagoInstance = timeago();
+// var time = timeagoInstance.format('2016-06-12');
+var time = timeagoInstance.format('2016-06-12', 'zh_CN');
+// var time = timeago().format(Date.now() - 11 * 1000 * 60 * 60);
 console.log(time);

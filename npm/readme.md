@@ -36,6 +36,10 @@
 
 4. fecha Javascript Date formatting and parsing
 
+5. akamai-time-reference Get reference time using Akamai's time reference service
+
+6. timeago.js A tiny library used to format date with *** time ago statement.
+
 > object
 
 1. has-own-property 判断某个对象是否含有指定的属性
