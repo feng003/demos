@@ -71,6 +71,8 @@
 
 1. is_number Returns true if the value is a number
 
+2. kind-of Get the native type of a value
+
 > function
 
 > generator
@@ -78,6 +80,14 @@
 1. is-generator Check whether a given value is a generator function
 
 > promise
+
+1. pify Promisify a callback-style function
+
+2. is-promise Test whether an object looks like a promises-a+ promise
+
+3. sleep-promise  Resolves a promise after a specified delay
+
+4. promise-all-props Like Promise.all but for object properties
 
 
 
