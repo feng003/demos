@@ -67,7 +67,18 @@
 
 10. set-value Create nested values and any intermediaries using dot notation ('a.b.c') paths
 
+> math
+
+1. is_number Returns true if the value is a number
+
 > function
+
+> generator
+
+1. is-generator Check whether a given value is a generator function
+
+> promise
+
 
 
 
