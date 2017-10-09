@@ -11,6 +11,8 @@ const pify = require('pify'); //TODO
 const isPromise = require('is-promise');
 const sleep = require('sleep-promise');
 const promiseAllProps = require('promise-all-props');
+const axios = require('axios');
+
 
 function* test(){
     var a = 1;

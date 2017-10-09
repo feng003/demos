@@ -11,6 +11,7 @@
     "array-last": "^1.2.0",
     "array-range": "^1.0.1",
     "array-swap": "0.0.4",
+    "axios": "^0.16.2",
     "dedupe": "^2.1.0",
     "fecha": "^2.3.1",
     "filled-array": "^1.1.0",
