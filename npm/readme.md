@@ -1,5 +1,18 @@
 ## npm 模块学习
 
+> String
+
+1. decamelize Convert a camelized string into a lowercased one with a custom separator: unicornRainbow → unicorn_rainbow
+
+2. pad-left Left pad a string with zeros or a specified string
+
+3. to-camel-case Convert a string to a camel case
+
+4. to-space-case Convert a string to a space case
+
+5. to-no-case Remove any existing casing from a string
+
+
 > array
 
 1. is-sorted A small module to check if an Array is sorted
@@ -74,6 +87,14 @@
 2. kind-of Get the native type of a value
 
 > function
+
+1. compose function Compose a new function from smaller functions `f(g(x))
+
+2. curry A curry function without anything too clever
+
+3. once Run a function exactly one time
+
+4. wrappy Callback wrapping utility
 
 > generator
 

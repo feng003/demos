@@ -11,8 +11,9 @@ const pify = require('pify'); //TODO
 const isPromise = require('is-promise');
 const sleep = require('sleep-promise');
 const promiseAllProps = require('promise-all-props');
-const axios = require('axios');
-
+const compose = require('compose-function'); //TODO
+const curry = require('curry');//TODO
+const once = require('once');
 
 function* test(){
     var a = 1;
@@ -56,3 +57,18 @@ promiseAllProps({
 }).then(function(result) {
     console.log(result.foo, result.bar);
 });
+
+function greet (name, cb) {
+    if (!name) cb('Hello anonymous')
+    cb('Hello ' + name)
+}
+
+function log (msg) {
+    console.log(msg)
+}
+
+// this will print 'Hello anonymous' but the logical error will be missed
+greet(null, once(msg))
+
+// once.strict will print 'Hello anonymous' and throw an error when the callback will be called the second time
+greet(null, once.strict(msg))
