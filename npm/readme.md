@@ -12,6 +12,22 @@
 
 5. to-no-case Remove any existing casing from a string
 
+6. to-capital-case Convert a string to a capital case
+
+7. to-constant-case Convert a string to a constant case
+
+8. to-snake-case Convert a string to a snake case
+
+9. to-dot-case Convert a string to a dot case
+
+10. to-pascal-case Convert a string to a pascal case
+
+11. to-sentence-case Convert a string to a sentence case
+
+12. to-title-case Convert a string to a title case
+
+13. escape-regexp-component Escape regular expression special characters
+
 
 > array
 
