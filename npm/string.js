@@ -14,6 +14,9 @@ const toDotCase = require('to-dot-case');
 const toPascalCase = require('to-pascal-case');
 const toSentenceCase = require('to-sentence-case');
 const toTitleCase = require('to-title-case');
+const slug = require('node-slug').slug();
+const rtrim = require('rtrim');
+const slice = require('slice.js');
 
 console.log(decamelize('unicornRainbow'));
 console.log(pad( '35', 4, '0'));
@@ -24,3 +27,9 @@ console.log(toDotCase('camelCase'));  //camel.case
 console.log(toPascalCase('dot.case'));//DotCase
 console.log(toSentenceCase('the catcher in the rye'));//The catcher in the rye
 console.log(toTitleCase('the catcher in the rye'));// The Catcher in the Rye
+
+console.log('我爱你'.slug());
+
+console.log(rtrim('..sss..','.'));
+console.log(rtrim('#..ssss..#','#'));
+console.log(slice('sad ssss')('1:2'));

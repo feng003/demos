@@ -28,6 +28,14 @@
 
 13. escape-regexp-component Escape regular expression special characters
 
+14. node-slug slugifies even utf-8 chars
+
+15. unidecode Unidecode takes UTF-8 data and tries to represent it in US-ASCII characters
+
+16. rtrim Strip whitespace - or other characters - from the end of a string
+
+17. slice.js Javascript library to engance String.substring / Array.slice with python slice style
+
 
 > array
 
