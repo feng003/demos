@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas</title>
+</head>
+<body>
+<canvas id="c" width="500" height="500"></canvas>
+<script>
+    var c = document.getElementById('c');
+    var ctx = c.getContext('2d');
+
+    var image = new Image();
+    image.onload = function(){
+        console.log('onload image');
+        ctx.drawImage(image,0,0,c.width,c.height);
+        ctx.fillStyle = "blue";
+        ctx.fillRect(100,100,100,100);
+        ctx.strokeRect(50,50,50,50);
+
+//        var saveImage = c.toDataURL();
+//        window.open(saveImage);
+    };
+    image.src = "https://s3.cn-north-1.amazonaws.com.cn/cn-discussions/asserts/logos/udacity-wordmark.svg";
+
+
+</script>
+</body>
+</html>
