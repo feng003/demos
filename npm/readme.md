@@ -134,6 +134,13 @@
 
 4. promise-all-props Like Promise.all but for object properties
 
+> File System
+
+1. rimraf A deep deletion module for node (like rm -rf)
+
+2. mkdirp Recursively mkdir, like mkdir -p
+
+3. tmp Temporary file and directory creator for node.js
 
 
 
