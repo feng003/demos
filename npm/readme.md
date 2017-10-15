@@ -142,6 +142,14 @@
 
 3. tmp Temporary file and directory creator for node.js
 
+4. file-size Lightweight filesize to human-readable / proportions w/o dependencies
+
+5. du A simple JavaScript implementation of du -sb
+
+6. fs-promise Node fs methods as Promise/A+ (optional fs-extra, graceful-fs)
+
+7. mz Modernize node.js
+
 
 
 
