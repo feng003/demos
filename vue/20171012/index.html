@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="app">
+    <div ref="msgDiv">{{msg}}</div>
+    <div v-if="msg1">Message got outside $nextTick: {{msg1}}</div>
+    <div v-if="msg2">Message got inside $nextTick: {{msg2}}</div>
+    <div v-if="msg3">Message got outside $nextTick: {{msg3}}</div>
+    <button @click="changeMsg">
+        Change the Message
+    </button>
+</div>
+
+<script src="https://unpkg.com/vue"></script>
+<script>
+    new Vue({
+        el: '.app',
+        data: {
+            msg: 'Hello Vue.',
+            msg1: '',
+            msg2: '',
+            msg3: ''
+        },
+        methods: {
+            changeMsg() {
+                this.msg = "Hello world.";
+                this.msg1 = this.$refs.msgDiv.innerHTML;
+                //TODO 执行dom变化之后的 数据更新
+                this.$nextTick(() => {
+                    this.msg2 = this.$refs.msgDiv.innerHTML
+                });
+                this.msg3 = this.$refs.msgDiv.innerHTML
+            }
+        }
+    })
+</script>
+</body>
+</html>
