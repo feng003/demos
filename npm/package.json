@@ -37,6 +37,7 @@
     "missing-deep-keys": "^1.0.0",
     "mkdirp": "^0.5.1",
     "mz": "^2.7.0",
+    "node-fetch": "^1.7.3",
     "node-slug": "0.0.2",
     "once": "^1.4.0",
     "pad-left": "^2.1.0",
